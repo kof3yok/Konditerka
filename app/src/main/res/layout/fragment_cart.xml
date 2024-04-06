@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@id/coordinatorLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@id/cartappbarlayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:elevation="0.0dip"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@id/toolBar"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="110.0dip"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+                    <ImageView
+                        android:id="@id/imageViewAppIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="110.0dip"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="0.0dip"
+                        android:layout_marginBottom="0.0dip"
+                        android:elevation="0.0dip"
+                        android:padding="10.0dip"
+                        android:src="@drawable/login" />
+                </androidx.appcompat.widget.Toolbar>
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <RelativeLayout
+                android:id="@id/activity_cart_Progressdialog"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/white"
+                android:elevation="1.0dip"
+                android:visibility="invisible">
+
+                <ProgressBar
+                    android:layout_width="80.0dip"
+                    android:layout_height="80.0dip"
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@id/linearLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:weightSum="1.0"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.0dip"
+                    android:layout_weight="0.09"
+                    android:orientation="horizontal"
+                    android:weightSum="1.0">
+
+                    <TextView
+                        android:id="@id/textViewOrderingFromText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:padding="0.0dip"
+                        android:paddingRight="3.0dip"
+                        android:text="@string/address"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/black"
+                        android:textSize="18.0sp" />
+
+                    <TextView
+                        android:id="@id/textViewOrderingFrom"
+                        android:layout_width="0.0dip"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1.0"
+                        android:padding="10.0dip"
+                        android:paddingLeft="3.0dip"
+                        android:textColor="@color/black"
+                        android:textSize="12.0sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@id/textViewHorizontalLine"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.0dip"
+                    android:layout_below="@id/textViewOrderingFrom"
+                    android:layout_weight="0.01"
+                    android:background="@color/cardview_dark_background" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@id/recyclerViewCart"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.0dip"
+                    android:layout_below="@id/textViewHorizontalLine"
+                    android:layout_weight="0.7" />
+
+                <RelativeLayout
+                    android:id="@id/relativeLayoutProceedToCart"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.0dip"
+                    android:layout_weight="0.2">
+
+                    <Button
+                        android:id="@id/btnSendOrder"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="false"
+                        android:text="@string/send_order"
+                        android:textAlignment="center"
+                        android:textColor="#ffffffff" />
+                </RelativeLayout>
+            </LinearLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </LinearLayout>
+</FrameLayout>

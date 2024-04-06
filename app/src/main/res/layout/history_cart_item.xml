@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:paddingEnd="5.0dip"
+    android:weightSum="1.0">
+
+    <RelativeLayout
+        android:layout_width="120.0dip"
+        android:layout_height="fill_parent">
+
+        <ImageView
+            android:id="@id/imgCartImage"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:contentDescription="Image" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@id/textViewOrderItem"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:padding="5.0dip"
+            android:text="Пирог"
+            android:textColor="@color/black"
+            android:textSize="18.0sp" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@id/textViewOrderItemQuantity"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_weight="0.5"
+                android:inputType="number"
+                android:padding="5.0dip"
+                android:text="1"
+                android:textAlignment="textStart"
+                android:textColor="@color/black"
+                android:textSize="18.0sp" />
+
+            <TextView
+                android:id="@id/textViewOrderItemPrice"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_weight="0.5"
+                android:inputType="number"
+                android:padding="5.0dip"
+                android:text="1"
+                android:textAlignment="textEnd"
+                android:textColor="@color/black"
+                android:textSize="18.0sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@id/txtTotal"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:padding="5.0dip"
+                android:text="@string/total"
+                android:textColor="@color/black"
+                android:textSize="18.0sp" />
+
+            <TextView
+                android:id="@id/textViewOrderItemTotalPrice"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                android:padding="5.0dip"
+                android:text="200"
+                android:textAlignment="textEnd"
+                android:textColor="@color/black"
+                android:textSize="18.0sp" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

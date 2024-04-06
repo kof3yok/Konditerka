@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name">CAkeApp</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="Product">hitproduct.php?method=getall</string>
+    <string name="Login">login.php?method=login</string>
+    <string name="Register">login.php?method=register</string>
+    <string name="shared_preferences">FoodApp</string>
+    <string name="url">http://185.86.15.144/ruslan/api/</string>
+
+
+    <string name="title_activity_home_page">HomePAge</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="title_activity_main3">MainActivity3</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="title_activity_cart">Cart</string>
+    <string name="catalog">Catalog</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login">Логин</string>
+    <string name="Password">Пароль</string>
+    <string name="Enter">Войти</string>
+    <string name="Register2">Зарегистрироваться</string>
+    <string name="ForgotPassword">Забыли пароль?</string>
+    <string name="address">Адрес</string>
+    <string name="send_order">Заказать</string>
+    <string name="add_cart">Добавить</string>
+    <string name="phoneNumber">Номер телефона(89111234567)</string>
+    <string name="e_mail">E Mail</string>
+    <string name="delivery_address">Адрес доставки</string>
+    <string name="confirm_password">Подтверждение пароля</string>
+    <string name="logout">Выйти</string>
+    <string name="update">Обновить</string>
+    <string name="total">ИТОГ:</string>
+    <string name="menu">Меню</string>
+    <string name="home">Главная</string>
+    <string name="cart">Корзина</string>
+    <string name="history">Заказы</string>
+    <string name="user">Профиль</string>
+    <string name="waiting">В обработке</string>
+    <string name="preparing">Готовится</string>
+    <string name="sent">В пути</string>
+    <string name="delivered">Доставлен</string>
+    <string name="cancelled">Отменён</string>
+    <string name="field_missing">Поле не заполнено</string>
+    <string name="password_dont_match">Пароли не совпадают</string>
+    <string name="sendCode">Отправить код</string>
+    <string name="code">Код</string>
+    <string name="change">Поменять</string>
+    <string name="sendcode">login.php?method=sendcode</string>
+    <string name="changepwd">login.php?method=changepwd</string>
+</resources>

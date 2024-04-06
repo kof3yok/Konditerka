@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@id/HistoryCoorLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@id/historyappbarlayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:elevation="0.0dip"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@id/historytoolBar"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="110.0dip"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+                    <ImageView
+                        android:id="@id/historyimageViewAppIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="110.0dip"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="0.0dip"
+                        android:layout_marginBottom="0.0dip"
+                        android:elevation="0.0dip"
+                        android:padding="10.0dip"
+                        android:src="@drawable/login" />
+                </androidx.appcompat.widget.Toolbar>
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <RelativeLayout
+                android:id="@id/activity_history_Progressdialog"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/white"
+                android:elevation="1.0dip"
+                android:visibility="invisible">
+
+                <ProgressBar
+                    android:layout_width="80.0dip"
+                    android:layout_height="80.0dip"
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@id/historyLinearLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:weightSum="1.0"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@id/historyRecyclerViewCart"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.0dip"
+                    android:layout_weight="0.8" />
+            </LinearLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </LinearLayout>
+</FrameLayout>

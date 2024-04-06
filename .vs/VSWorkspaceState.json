@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\app",
+    "\\app\\src",
+    "\\app\\src\\main",
+    "\\app\\src\\main\\res",
+    "\\app\\src\\main\\res\\layout",
+    "\\app\\src\\main\\res\\layout-w1240dp",
+    "\\app\\src\\main\\res\\layout-w936dp",
+    "\\app\\src\\main\\res\\values",
+    "\\gradle",
+    "\\gradle\\wrapper"
+  ],
+  "PreviewInSolutionExplorer": false
+}
