@@ -1,3 +1,4 @@
+// Связь с Веб-сервисом
 package com.example.cakeapp.utils
 
 import android.content.Context
