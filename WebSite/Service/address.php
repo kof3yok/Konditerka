@@ -3,10 +3,11 @@ require_once 'base.php';
 
 class Address
 {
-    private $conn;
-    private $table_name = "address";
-
-    public $ID;
+    private $conn; // Связь с БД
+    private $table_name = "address"; // Выбор таблицы
+    
+    // Колонки выбора таблицы 
+    public $ID; 
     public $UserID;
     public $Address;
     public $CreationDate;
@@ -15,7 +16,8 @@ class Address
     {
         $this->conn = $db;
     }
-    function Create()
+    // Создание нового адреса
+    function Create() 
     {
         $this->Address = htmlspecialchars(strip_tags($this->Address));
 
@@ -40,6 +42,7 @@ class Address
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    // Удаление нового адреса
     function Delete()
     {
         $query = "DELETE FROM " . $this->table_name .
@@ -52,6 +55,7 @@ class Address
         return false;
         //return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    // Обновление нового адреса
     function Update()
     {
         $this->Address = htmlspecialchars(strip_tags($this->Address));
@@ -67,6 +71,7 @@ class Address
         return false;
         //return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    // Создание/обновление адреса
     function CreateOrUpdate()
     {
         $this->Address = htmlspecialchars(strip_tags($this->Address));
@@ -87,6 +92,7 @@ class Address
             $this->Create();
         }
     }
+    // Получение последнегоо актуального адреса пользователя
     function GetByUserID()
     {
         $query = "SELECT Address FROM " . $this->table_name . " WHERE UserID = :UserID ORDER By CreationDate DESC LIMIT 0,1";
