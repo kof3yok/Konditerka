@@ -1,9 +1,9 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: OPTIONS,GET,POST,PUT,DELETE");
-header("Access-Control-Max-Age: 3600");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+header("Access-Control-Allow-Origin: *"); // Это разрешает доступ к ресурсу из любого источника (домена). Звёздочка (*) означает, что запросы могут приходить из любого домена.
+header("Content-Type: application/json; charset=UTF-8"); // Это указывает тип контента, который будет возвращен в ответ на запрос. В данном случае, это JSON с кодировкой UTF-8.
+header("Access-Control-Allow-Methods: OPTIONS,GET,POST,PUT,DELETE"); // Это определяет разрешённые HTTP методы для доступа к ресурсу. В данном случае, это OPTIONS, GET, POST, PUT, DELETE.
+header("Access-Control-Max-Age: 3600"); // Это определяет максимальное время в секундах, на которое предыдущие настройки CORS будут кешированы в браузере до повторного запроса.
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"); // Это список допустимых заголовков запроса, которые могут быть переданы из клиентской стороны.
 
 include_once './src/System/DatabaseConnector.php';
 include_once './Service/login.php';
