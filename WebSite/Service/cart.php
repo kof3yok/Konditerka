@@ -1,3 +1,4 @@
+// Этот фрагмент кода на PHP определяет класс Cart, который представляет корзину покупок пользователя в базе данных.
 <?php
 require_once 'base.php';
 
@@ -16,7 +17,10 @@ class Cart
     {
         $this->conn = $db;
     }
-    function Create()
+    // Этот метод предназначен для добавления нового товара в корзину. 
+    //Он сначала проверяет, существует ли уже запись о данном товаре для данного пользователя в базе данных.
+    //Если запись не найдена, то добавляет новую запись о товаре в корзину. Если запись уже существует, то обновляет количество данного товара в корзине.
+    function Create() 
     {
         $query = "SELECT ID,Quantity FROM " . $this->table_name . "
         WHERE PriceID=:PriceID AND UserID=:UserID;";
@@ -52,6 +56,8 @@ class Cart
         }
         return $this->GetAllForUser();
     }
+    // Этот метод возвращает все товары в корзине для определенного пользователя. 
+    //Он выполняет SQL-запрос, чтобы получить данные о товарах в корзине, включая информацию о самих товарах (название, описание, цена и т.д.).
     function GetAllForUser()
     {
         $query = "SELECT ppp.ImageData, c.ID,
@@ -78,6 +84,7 @@ class Cart
         $stmt->execute();
         return $stmt;
     }
+    // Этот метод удаляет определенный товар из корзины пользователя. 
     function Delete()
     {
         $query = "DELETE FROM " . $this->table_name .
@@ -88,6 +95,7 @@ class Cart
         $stmt->bindParam(':UserID', $this->UserID);
         $stmt->execute();
     }
+    // Этот метод удаляет все товары из корзины пользователя.
     function DeleteAll()
     {
         $query = "DELETE FROM " . $this->table_name .
@@ -97,6 +105,7 @@ class Cart
         $stmt->bindParam(':UserID', $this->UserID);
         $stmt->execute();
     }
+    // Этот метод обновляет количество определенного товара в корзине. 
     function Update()
     {
         $query = "UPDATE " . $this->table_name .
