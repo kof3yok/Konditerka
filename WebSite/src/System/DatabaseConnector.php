@@ -1,7 +1,7 @@
 <?php
 class Database{
   
-    // specify your own database credentials
+    // Указываем свои собственные учетные данные базы данных
     private $host = "185.86.15.144";
     private $port = "3307";
     private $db_name = "pirogapp";
@@ -9,7 +9,7 @@ class Database{
     private $password = "Demre0735.";
     public $conn;
   
-    // get the database connection
+    // Получение соединения с базой данных
     public function getConnection(){
   
         $this->conn = null;
