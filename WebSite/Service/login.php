@@ -1,3 +1,4 @@
+// Этот код - класс Login, который содержит функции для работы с аутентификацией и регистрацией пользователей в базе данных.
 <?php
 require_once 'base.php';
 
@@ -11,12 +12,13 @@ class Login
     public $password;
     public $email;
     public $phone;
-
+    // то конструктор класса, который принимает объект базы данных и устанавливает его в приватное свойство $conn
     public function __construct($db)
     {
         $this->conn = $db;
     }
-
+    // Это метод для проверки аутентификации пользователя. Он выполняет запрос к базе данных, чтобы найти пользователя по его имени пользователя (Username). 
+    // Возвращает данные пользователя, если пользователь найден, в противном случае возвращает null
     function Login()
     {
         $this->username = htmlspecialchars(strip_tags($this->username));
@@ -29,6 +31,7 @@ class Login
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    //  Этот метод аналогичен методу Login, но также проверяет, является ли пользователь администратором (путем проверки поля IsAdmin)
     function AdminLogin()
     {
         $this->username = htmlspecialchars(strip_tags($this->username));
@@ -41,6 +44,7 @@ class Login
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    // Этот метод регистрирует нового пользователя. Он хэширует пароль с использованием password_hash, чтобы сохранить его безопасным в базе данных, затем вставляет новую запись в таблицу пользователей.
     function Register()
     {
         $this->username = htmlspecialchars(strip_tags($this->username));
@@ -70,6 +74,7 @@ class Login
         $result = $this->Login();
         return $result;
     }
+    // Этот метод обновляет информацию о пользователе в базе данных. Он обновляет имя пользователя, адрес электронной почты и номер телефона. При необходимости обновляет пароль, хэшируя его снова
     function Update()
     {
         $this->username = htmlspecialchars(strip_tags($this->username));
