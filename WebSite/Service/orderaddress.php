@@ -10,11 +10,15 @@ class OrderAddress
     public $OrderID;
     public $Address;
     public $CreationDate;
-
+// Конструктор принимает объект базы данных     и устанавливает его в свойство $conn для последующего использования.
     public function __construct($db)
     {
         $this->conn = $db;
     }
+// Метод Create() создает новую запись в таблице orderaddress с данными, указанными в свойствах объекта.
+// Прежде чем вставить адрес в базу данных, он очищается от потенциально опасных символов с помощью htmlspecialchars(strip_tags($this->Address)).
+// Генерируется уникальный идентификатор (GUID()) и текущая дата и время для поля ID и CreationDate соответственно.
+// Вставленные данные затем выбираются обратно, чтобы вернуть ID новой записи.
     function Create()
     {
         $this->Address = htmlspecialchars(strip_tags($this->Address));
@@ -41,29 +45,3 @@ class OrderAddress
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    // function Delete()
-    // {
-    //     $query = "DELETE FROM " . $this->table_name .
-    //         " WHERE ID = :ID AND UserID = :UserID;";
-
-    //     $stmt = $this->conn->prepare($query);
-    //     $stmt->bindParam(':ID', $this->ID);
-    //     $stmt->bindParam(':UserID', $this->UserID);
-    //     if ($stmt->execute()) return true;
-    //     return false;
-    // }
-    // function Update()
-    // {
-    //     $this->Address = htmlspecialchars(strip_tags($this->Address));
-
-    //     $query = "UPDATE " . $this->table_name .
-    //         " SET Address =:address
-    //         WHERE ID = :ID;";
-
-    //     $stmt = $this->conn->prepare($query);
-    //     $stmt->bindParam(':ID', $this->ID);
-    //     $stmt->bindParam(':address', $this->Address);
-    //     if ($stmt->execute()) return true;
-    //     return false;
-    // }
-}
