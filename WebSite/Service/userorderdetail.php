@@ -1,3 +1,4 @@
+// Этот код - часть PHP-класса UserOrderDetail, который, вероятно, отвечает за работу с деталями заказов пользователей в некотором приложении или системе.
 <?php
 require_once 'base.php';
 
@@ -12,11 +13,15 @@ class UserOrderDetail
     public $Quantity;
     public $Price;
     public $CreationDate;
-
+    // Устанавливает соединение с базой данных и присваивает его переменной $conn.
     public function __construct($db)
     {
         $this->conn = $db;
     }
+    // Добавляет новую запись в таблицу userorderdetail.
+    // Генерирует уникальный идентификатор для записи с помощью функции GUID().
+    // Использует подготовленный запрос для вставки данных в таблицу.
+    // Возвращает идентификатор только что созданной записи.
     function Create()
     {
         $query = "INSERT INTO " . $this->table_name . "(
@@ -45,6 +50,8 @@ class UserOrderDetail
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    // Похож на Create, но принимает список объектов и создает записи для каждого из них.
+    // Обрабатывает возможные исключения, которые могут возникнуть в процессе выполнения операций вставки.
     function CreateAll($OrderDetailList)
     {
         try {
@@ -73,6 +80,9 @@ class UserOrderDetail
             return false;
         }
     }
+    // Получает все детали заказа для конкретного заказа.
+    // Использует JOIN для объединения таблиц userorderdetail, Product и Catalog, чтобы получить дополнительные данные о продукте и каталоге.
+    // Возвращает результат выполнения запроса.
     function GetAllByOrder()
     {
         $query = "SELECT 
@@ -99,6 +109,8 @@ class UserOrderDetail
         $stmt->execute();
         return $stmt;
     }
+    // Получает общее количество заказов и общую сумму для определенного продукта.
+    // Возвращает результат выполнения запроса.
     function GetAllByProduct()
     {
         $query = "SELECT 
@@ -112,18 +124,4 @@ class UserOrderDetail
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    // function Update()
-    // {
-    //     $this->Address = htmlspecialchars(strip_tags($this->Address));
-
-    //     $query = "UPDATE " . $this->table_name .
-    //         " SET Address =:address
-    //         WHERE ID = :ID;";
-
-    //     $stmt = $this->conn->prepare($query);
-    //     $stmt->bindParam(':ID', $this->ID);
-    //     $stmt->bindParam(':address', $this->Address);
-    //     if ($stmt->execute()) return true;
-    //     return false;
-    // }
 }
