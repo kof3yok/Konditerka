@@ -1,3 +1,4 @@
+// Этот код представляет класс RenewPassword, который предположительно используется для отправки кодов подтверждения для сброса пароля, управления этими кодами и отправки уведомлений о статусе заказов
 <?php
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -18,11 +19,12 @@ class RenewPassword
   public $Username;
   public $Code;
   public $CreationDate;
-
+// Принимает объект базы данных и сохраняет его в приватной переменной $conn
   public function __construct($db)
   {
     $this->conn = $db;
   }
+// Отправляет код подтверждения для сброса пароля на указанный адрес электронной почты ($to). Генерирует случайный код, сохраняет его в базу данных, затем отправляет письмо с этим кодом на указанный адрес
   function SendCode($to)
   {
 
@@ -80,6 +82,7 @@ class RenewPassword
       //  echo 'Ошибка: ' . $mail->ErrorInfo;
     }
   }
+//  Отправляет письмо с указанным текстом ($body) на указанный адрес электронной почты ($to). Вероятно, используется для отправки уведомлений о статусе заказа.
   function SendCode2($to, $body)
   {
 
@@ -123,6 +126,7 @@ class RenewPassword
       //  echo 'Ошибка: ' . $mail->ErrorInfo;
     }
   }
+// Проверяет, совпадает ли указанный код подтверждения с последним сохраненным кодом для данного пользователя.
   function CheckCode(): bool
   {
     $query = "SELECT Username,Code,CreationDate FROM " . $this->table_name . " 
@@ -143,6 +147,7 @@ class RenewPassword
       return false;
     } else return false;
   }
+// Формирует HTML-тело электронного письма с информацией о заказе ($OrderDetail), его статусе ($type) и информацией о курьере ($driver). Затем вызывает метод SendCode2() для отправки этого письма
   function SendPreparingEMail($to, $OrderDetail, $type, $driver)
   {
     $body = "<html>";
@@ -177,6 +182,7 @@ class RenewPassword
     $body .= "</body></html>";
     $this->SendCode2($to, $body);
   }
+// Содержат HTML-разметку для стилей письма, заголовка, подвала и строки таблицы с информацией о заказе соответственно.
   private $style = "<style>table.cinereousTable {
         border: 6px solid #948473;
         background-color: #FFE3C6;
