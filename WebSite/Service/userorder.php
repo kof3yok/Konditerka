@@ -1,3 +1,4 @@
+// Этот PHP-код представляет класс UserOrder, который используется для взаимодействия с базой данных для работы с заказами пользователей.
 <?php
 require_once 'base.php';
 require_once 'mail.php';
@@ -14,11 +15,12 @@ class UserOrder
     public $Status;
     public $CreationDate;
     public $Address;
-
+    // Конструктор класса, который устанавливает соединение с базой данных.    
     public function __construct($db)
     {
         $this->conn = $db;
     }
+    // Создает новую запись заказа в базе данных.
     function Create()
     {
         $query = "INSERT INTO " . $this->table_name . "(
@@ -44,6 +46,7 @@ class UserOrder
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    // Получает все заказы, сделанные определенным пользователем.
     function GetAllByUser()
     {
         $query = "SELECT 
@@ -62,6 +65,7 @@ class UserOrder
         $stmt->execute();
         return $stmt;
     }
+    // Получает последние 10 заказов, отсортированных по дате создания.
     function GetLast10()
     {
         $query = "SELECT 
@@ -82,6 +86,7 @@ class UserOrder
         $stmt->execute();
         return $stmt;
     }
+    // Получает общее количество заказов и их общую стоимость для панели управления (например, административной панели).
     function GetAllForDashboard()
     {
         $query = "SELECT 
@@ -93,6 +98,7 @@ class UserOrder
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    // Получает все заказы, фильтруемые по имени пользователя или ID заказа.
     function GetAll($filter)
     {
         $query = "SELECT 
@@ -114,6 +120,7 @@ class UserOrder
         $stmt->execute($data);
         return $stmt;
     }
+    // Получает информацию о конкретном заказе по его ID.    
     function Get()
     {
         $query = "SELECT 
@@ -130,6 +137,7 @@ class UserOrder
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    // Обновляет статус заказа и отправляет уведомление пользователю об изменениях статуса заказа.
     function UpdateStatus()
     {
         $query = "UPDATE " . $this->table_name .
@@ -193,6 +201,7 @@ class UserOrder
         }
         return false;
     }
+    // Устанавливает статус заказа как "Отправлен" и вызывает функцию UpdateStatus для обновления статуса и отправки уведомления.
     function Sent()
     {
         $query = "UPDATE " . $this->table_name .
