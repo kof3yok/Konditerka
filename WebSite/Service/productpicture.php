@@ -1,3 +1,4 @@
+// Этот код представляет класс ProductPicture, который предназначен для работы с изображениями товаров в базе данных
 <?php
 require_once 'base.php';
 
@@ -12,11 +13,14 @@ class ProductPicture
     public $First;
     public $Status;
     public $CreationDate;
-
+    // Устанавливает соединение с базой данных, переданное в качестве аргумента.
     public function __construct($db)
     {
         $this->conn = $db;
     }
+    // Создает новую запись в таблице productpicture с данными о продукте и его изображении.
+    // Использует подготовленное SQL-выражение для безопасной вставки данных в таблицу.
+    // После вставки возвращает идентификатор новой записи.
     function Create()
     {
         $query = "INSERT INTO " . $this->table_name . " (
@@ -51,6 +55,8 @@ class ProductPicture
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    // Получает все записи изображений для определенного продукта.
+    // Использует подготовленное SQL-выражение для безопасного получения данных из таблицы.
     function GetAllForProduct()
     {
         $query = "SELECT ID, ProductID, ImageData, First, Status, CreationDate FROM " . $this->table_name .
@@ -61,6 +67,7 @@ class ProductPicture
         $stmt->execute();
         return $stmt;
     }
+    // Удаляет запись об изображении товара по заданному идентификатору изображения и идентификатору продукта.
     function Delete()
     {
         $query = "DELETE FROM " . $this->table_name .
@@ -72,6 +79,8 @@ class ProductPicture
         if ($stmt->execute()) return true;
         return false;
     }
+    // Обновляет поле First, чтобы установить одно изображение товара как первичное (первое).
+    // Сначала устанавливает First = 0 для всех изображений данного продукта, затем устанавливает First = 1 для указанного изображения.
     function UpdateFirst()
     {
         $query = "UPDATE " . $this->table_name .
@@ -87,6 +96,7 @@ class ProductPicture
         if ($stmt->execute()) return true;
         return false;
     }
+    // Активирует (устанавливает статус = 1) указанное изображение товара.
     function Active()
     {
         $query = "UPDATE " . $this->table_name .
@@ -98,6 +108,7 @@ class ProductPicture
         if ($stmt->execute()) return true;
         return false;
     }
+    // Деактивирует (устанавливает статус = 0) указанное изображение товара.
     function Passive()
     {
         $query = "UPDATE " . $this->table_name .
