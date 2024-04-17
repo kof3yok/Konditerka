@@ -1,3 +1,4 @@
+// Этот код реализует класс User, который представляет собой модель пользователя в базе данных.
 <?php
 require_once 'base.php';
 
@@ -11,12 +12,15 @@ class User
     public $password;
     public $email;
     public $phone;
-
+    // Устанавливает соединение с базой данных и сохраняет его в переменной $conn.
     public function __construct($db)
     {
         $this->conn = $db;
     }
-
+    // Обновляет данные пользователя в базе данных.
+    // Принимает новый пароль и электронную почту для обновления.
+    // Защищает входные данные от XSS-атак и SQL-инъекций.
+    // Хэширует пароль перед сохранением в базу данных с использованием функции password_hash.
     function Update()
     {
         $this->username = htmlspecialchars(strip_tags($this->username));
@@ -35,6 +39,10 @@ class User
         return false;
         //return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    // Изменяет пароль пользователя в базе данных.
+    // Принимает новый пароль для изменения.
+    // Защищает входные данные от XSS-атак и SQL-инъекций.
+    // Хэширует новый пароль перед сохранением в базу данных с использованием функции password_hash.
     function ChangePwd()
     {
         $this->password = htmlspecialchars(strip_tags($this->password));
@@ -50,6 +58,7 @@ class User
         return false;
         //return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    // Возвращает количество записей в таблице пользователей.
     function GetAll()
     {
         $query = "SELECT 
@@ -59,6 +68,8 @@ class User
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    // Возвращает список пользователей, отфильтрованных по заданному критерию (фильтру).
+    // Использует оператор LIKE для поиска совпадений в именах пользователей, электронной почте и телефонных номерах.
     function GetAllByFilter($filter)
     {
         $query = "SELECT 
@@ -77,6 +88,7 @@ class User
         $stmt->execute($data);
         return $stmt;
     }
+    // Возвращает данные пользователя по его идентификатору (ID).
     function GetByID()
     {
         $query = "SELECT 
@@ -95,6 +107,7 @@ class User
         $stmt->execute($data);
         return $stmt;
     }
+    // Возвращает данные пользователя по его имени пользователя (username).
     function GetByUsername()
     {
         $query = "SELECT 
