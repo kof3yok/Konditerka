@@ -1,4 +1,6 @@
+// Этот код организует взаимодействие между веб-страницей, пользователем и базой данных для управления товарами и связанными с ними данными.
 <?php
+// При получении POST-запроса с параметром 'save_update' выполняется обновление или создание нового продукта в базе данных. Затем происходит перенаправление пользователя на страницу редактирования продукта.
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['save_update'])) {
 
     include_once '../../src/System/DatabaseConnector.php';
@@ -19,6 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['save_update'])) {
         $product->ID = $result["ID"];
     }
     header('Location: ../productedit.php?id=' . $product->ID);
+    
+    // Если получен POST-запрос с параметром 'picture_upload', то загружается изображение продукта. После загрузки изображения также происходит перенаправление пользователя на страницу редактирования продукта.
 } else if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['picture_upload'])) {
     if (isset($_FILES["file"]) && $_FILES["file"]["error"] == 0) {
         include_once '../../src/System/DatabaseConnector.php';
@@ -35,6 +39,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['save_update'])) {
         $pp->Create();
     }
     header('Location: ../productedit.php?id=' . $pp->ProductID);
+
+    // Если получен POST-запрос с параметром 'picture_default', устанавливается изображение продукта по умолчанию.
 } else if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['picture_default'])) {
 
     include_once '../../src/System/DatabaseConnector.php';
@@ -48,6 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['save_update'])) {
     $pp->UpdateFirst();
 
     header('Location: ../productedit.php?id=' . $pp->ProductID);
+    // При получении POST-запроса с параметром 'product_passive' продукт помечается как неактивный.
 } else if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_passive'])) {
 
     include_once '../../src/System/DatabaseConnector.php';
@@ -61,6 +68,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['save_update'])) {
     } else {
     }
     header('Location: ../productedit.php?id=' . $product->ID);
+
+    // При получении POST-запроса с параметром 'product_active' продукт активируется.
 } else if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_active'])) {
 
     include_once '../../src/System/DatabaseConnector.php';
@@ -75,6 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['save_update'])) {
     }
     header('Location: ../productedit.php?id=' . $product->ID);
 }
+// В конце кода определены функции для получения данных из базы данных о продуктах, ценах на продукты, заказах, изображениях и каталоге продуктов.
 function GetAll($filter)
 {
     // Get user input
