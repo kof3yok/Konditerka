@@ -1,3 +1,4 @@
+// Этот код - это класс ProductPrice, который представляет собой модель для работы с ценами на товары в базе данных
 <?php
 require_once 'base.php';
 
@@ -18,6 +19,8 @@ class ProductPrice
     {
         $this->conn = $db;
     }
+    // Этот метод создает новую запись цены продукта в базе данных. 
+    // Он принимает данные о продукте (ID, название, описание, цена) и вставляет их в соответствующую таблицу. После вставки возвращает ID только что созданной записи.
     function Create()
     {
         $this->Description = htmlspecialchars(strip_tags($this->Description));
@@ -48,6 +51,7 @@ class ProductPrice
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    // Этот метод получает информацию о цене продукта из базы данных по указанному ID.
     function Get()
     {
         $query = "SELECT ID,
@@ -64,6 +68,7 @@ class ProductPrice
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    // Этот метод получает все цены, связанные с определенным продуктом, из базы данных.
     function GetAllForProduct()
     {
         $query = "SELECT ID,
@@ -80,6 +85,7 @@ class ProductPrice
         $stmt->execute();
         return $stmt;
     }
+    // Этот метод удаляет запись о цене продукта из базы данных по указанному ID.
     function Delete()
     {
         $query = "DELETE FROM " . $this->table_name .
@@ -91,6 +97,7 @@ class ProductPrice
         if ($stmt->execute()) return true;
         return false;
     }
+    // Этот метод обновляет информацию о цене продукта в базе данных по указанному ID.
     function Update()
     {
         $query = "UPDATE " . $this->table_name .
@@ -108,6 +115,7 @@ class ProductPrice
         if ($stmt->execute()) return true;
         return false;
     }
+    // Этот метод активирует запись о цене продукта в базе данных по указанному ID, устанавливая статус активной.
     function Active()
     {
         $query = "UPDATE " . $this->table_name .
@@ -119,6 +127,7 @@ class ProductPrice
         if ($stmt->execute()) return true;
         return false;
     }
+    // Этот метод деактивирует запись о цене продукта в базе данных по указанному ID, устанавливая статус неактивной.
     function Passive()
     {
         $query = "UPDATE " . $this->table_name .
