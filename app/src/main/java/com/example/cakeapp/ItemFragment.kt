@@ -1,3 +1,4 @@
+// Код, отвечающий за отображение каждого товара на главной странице
 package com.example.cakeapp
 
 import android.app.Activity
