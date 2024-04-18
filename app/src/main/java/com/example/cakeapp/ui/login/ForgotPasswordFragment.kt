@@ -1,3 +1,4 @@
+// Код, отвечающий за необходимые функции при нажатии "Забыли пароль"
 package com.example.cakeapp.ui.login
 
 import android.app.Activity
