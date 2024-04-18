@@ -1,3 +1,4 @@
+// Код, отвечающий за отображение главной страницы приложения после входа
 package com.example.cakeapp
 
 import android.content.Context
@@ -153,30 +154,15 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
         }
         super.onBackPressed()
     }
-//    override fun onBackPressed() {
-//        val currentFragment = supportFragmentManager.findFragmentById(R.id.frameLayout)//gets the id og=f the current fragment
-//
-//        when(currentFragment){
-//            !is DashboardFragment -> {
-//                navigationView.menu.getItem(0).setChecked(true)
-//                openDashboard()}
-//            else ->super.onBackPressed()
-//        }
-//    }
 
     private fun openFragment(fragment: Fragment) {
-//        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+
         fragmentManager.beginTransaction().replace(R.id.flFragment, fragment).commit()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         openFragment(fragment_catalog(this, item.tooltipText.toString(), fragmentManager))
         binding.dl.closeDrawer(GravityCompat.START)
-//        Toast.makeText(
-//            this,
-//            item.title.toString() + " " + item.tooltipText,
-//            Toast.LENGTH_SHORT
-//        ).show()
         return true
     }
 }
