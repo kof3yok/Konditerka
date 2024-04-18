@@ -1,3 +1,4 @@
+// Код, отображающий страницу с описанием товара
 package com.example.cakeapp
 
 import android.os.Bundle
