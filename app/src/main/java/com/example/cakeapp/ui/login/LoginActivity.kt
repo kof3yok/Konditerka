@@ -1,3 +1,4 @@
+// Код, отвечающий за выполнение необходимых функций при входе в приложение
 package com.example.cakeapp.ui.login
 
 import android.app.Activity
