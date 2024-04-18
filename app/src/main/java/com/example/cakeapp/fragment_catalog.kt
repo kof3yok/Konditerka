@@ -1,3 +1,4 @@
+// Код, отображающий страницу каталога товаров
 package com.example.cakeapp
 
 import android.app.Activity
