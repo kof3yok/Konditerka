@@ -1,3 +1,4 @@
+// Модель корзины
 package com.example.cakeapp.data.model
 
 import java.util.Date
