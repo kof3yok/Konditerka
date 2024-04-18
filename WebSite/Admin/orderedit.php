@@ -1,3 +1,4 @@
+// Страница, отвечающая за детали заказа и за взаимодействия с ним
 <?php
 session_start();
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
