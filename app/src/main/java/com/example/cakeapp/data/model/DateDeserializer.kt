@@ -1,3 +1,4 @@
+// Модель десериализации даты
 package com.example.cakeapp.data.model
 
 import com.google.gson.*
