@@ -1,3 +1,4 @@
+// Код, отвечающий за детали предыдущих заказов
 package com.example.cakeapp.placeholder
 
 import android.content.Context
