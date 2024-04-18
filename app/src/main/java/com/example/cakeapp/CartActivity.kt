@@ -1,3 +1,4 @@
+// Код, отвечающий за операции в корзине
 package com.example.cakeapp
 
 import android.app.Activity
