@@ -1,3 +1,4 @@
+// Код, отвечающий за прокрутку товаров на главной странице
 package com.example.cakeapp.placeholder
 
 import android.widget.Toast
