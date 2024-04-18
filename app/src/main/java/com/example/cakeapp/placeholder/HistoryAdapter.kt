@@ -1,3 +1,4 @@
+// Код, отвечающий за отображение истории заказов
 package com.example.cakeapp.placeholder
 
 import android.content.Context
