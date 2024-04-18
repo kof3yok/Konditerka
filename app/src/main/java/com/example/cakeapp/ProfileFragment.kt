@@ -1,3 +1,4 @@
+// Код, отображающий страницу пользователя
 package com.example.cakeapp
 
 import android.app.Activity
