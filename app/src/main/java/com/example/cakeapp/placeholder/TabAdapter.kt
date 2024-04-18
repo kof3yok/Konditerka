@@ -1,3 +1,4 @@
+// Код, отвечающий за вкладки
 package com.example.cakeapp.placeholder
 
 
