@@ -1,3 +1,4 @@
+// Список товаров
 package com.example.cakeapp.data.model
 
 data class Catalog(
