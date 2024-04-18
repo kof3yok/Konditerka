@@ -1,3 +1,4 @@
+// Код, отображающий страницу с историей заказов
 package com.example.cakeapp
 
 import android.app.Activity
@@ -88,11 +89,6 @@ class history_cart(
                     try {
                         val registerUser = JSONObject()
                         registerUser.put("OrderID", orderID)
-//                    registerUser.put("username", etxtUsername.text)
-//                    registerUser.put("phone", etxtMobileNumber.text)
-//                    registerUser.put("password", etxtPassword.text)
-//                    registerUser.put("address", etxtDeliveryAddress.text)
-//                    registerUser.put("email", etxtEmail.text)
 
                         val queue = Volley.newRequestQueue(activity as Context)
                         val url =
