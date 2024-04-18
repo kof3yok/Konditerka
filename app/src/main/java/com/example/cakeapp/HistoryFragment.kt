@@ -1,3 +1,4 @@
+// Код, отвечающий за отображение содержимого в истории заказов
 package com.example.cakeapp
 
 import android.app.Activity
