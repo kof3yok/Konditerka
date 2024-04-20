@@ -1,5 +1,8 @@
 // Старница заказов
 <?php
+// Начало сессии: session_start() запускает сессию, что позволяет сохранять и использовать данные сессии между различными запросами.
+// Проверка авторизации: Проверяет, авторизован ли пользователь. Если в сессии установлен ключ 'loggedin' и его значение равно true, то пользователь считается авторизованным ($adminloggedin = true), и его ID сохраняется в переменную $userId. 
+// В противном случае пользователь считается неавторизованным ($adminloggedin = false) и $userId устанавливается в 0.
 session_start();
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
     $adminloggedin = true;
@@ -125,7 +128,10 @@ if ($adminloggedin) {
                                                             <form action="" method="get">
                                                                 <div class="form-group row"><label class="col-sm-2 col-form-label"></label>
                                                                     <div class="col-sm-4">
-                                                                        <input name="filter" class="form-control form-control-round" type="text" placeholder="Введите название" value="<?php if (isset($_GET['filter'])) {
+                                                                        <input name="filter" class="form-control form-control-round" type="text" placeholder="Введите название" value="<?php
+                                                                                                                         // Этот код PHP проверяет, существует ли параметр запроса с именем 'filter' ($_GET['filter']). Если этот параметр существует, то код выводит его значение с помощью оператора echo. 
+                                                                                                                        // В противном случае, если параметр 'filter' не существует в запросе, код выводит пустую строку ("").
+                                                                                                                                                                                        if (isset($_GET['filter'])) {
                                                                                                                                                                                             echo $_GET['filter'];
                                                                                                                                                                                         } else {
                                                                                                                                                                                             echo "";
@@ -151,14 +157,17 @@ if ($adminloggedin) {
                                                                     </thead>
                                                                     <tbody>
                                                                         <?php
-
+                                                                        // Подключение к базе данных: Строка require_once '../src/System/DatabaseConnector.php'; используется для подключения к базе данных.
                                                                         require_once '../src/System/DatabaseConnector.php';
+                                                                        // Подключение сервиса для работы с заказами: Строка require_once 'Service/_orderpartial.php'; используется для подключения сервиса или файла, который содержит функции для работы с заказами.
                                                                         require_once 'Service/_orderpartial.php';
+                                                            // Получение заказов из базы данных: Строка if (isset($_GET["filter"])) $all_order = GetAll($_GET["filter"]); else $all_order = GetAll(''); проверяет, был ли передан параметр фильтрации в запросе. 
+                                                            // Если да, то функция GetAll() вызывается с этим параметром, чтобы получить заказы, соответствующие фильтру. Если нет, то вызывается функция GetAll() без параметров, чтобы получить все заказы.
+                                                            // Получение заказов из базы данных: Строка if (isset($_GET["filter"])) $all_order = GetAll($_GET["filter"]); else $all_order = GetAll(''); проверяет, был ли передан параметр фильтрации в запросе. Если да, то функция GetAll() вызывается с этим параметром, чтобы получить заказы, соответствующие фильтру. 
+                                                            // Если нет, то вызывается функция GetAll() без параметров, чтобы получить все заказы.
                                                                         if (isset($_GET["filter"]))
                                                                             $all_order = GetAll($_GET["filter"]);
                                                                         else $all_order = GetAll('');
-
-                                                                        // if ($all_order != null) {
                                                                         $num = $all_order->rowCount();
                                                                         if ($num > 0) {
                                                                             while ($row = $all_order->fetch(PDO::FETCH_ASSOC)) {
@@ -187,7 +196,6 @@ if ($adminloggedin) {
                                                                             echo '<td colspan="7">No Waiting Order</td>';
                                                                             echo '</tr>';
                                                                         }
-                                                                        // }
                                                                         ?>
                                                                     </tbody>
                                                                 </table>
