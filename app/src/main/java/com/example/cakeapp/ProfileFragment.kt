@@ -30,7 +30,7 @@ import com.example.cakeapp.utils.ConnectionManager
 import com.google.gson.Gson
 import org.json.JSONException
 import org.json.JSONObject
-
+// Класс ProfileFragment: Этот класс является фрагментом, который отображает профиль пользователя.
 class ProfileFragment(val contextParam: Context, val fm: FragmentManager) : Fragment() {
     private lateinit var etxtUsername: EditText
     private lateinit var etxtEmail: EditText
@@ -41,11 +41,11 @@ class ProfileFragment(val contextParam: Context, val fm: FragmentManager) : Frag
     private lateinit var btnRegister: Button
     private lateinit var btnLogout: TextView
     private lateinit var register_fragment_Progressdialog: RelativeLayout
+// Метод onCreateView: В этом методе происходит настройка макета фрагмента, инициализация полей ввода, кнопок и других элементов пользовательского интерфейса. Также устанавливаются слушатели событий для кнопок.
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
         etxtUsername = view.findViewById(R.id.etxtUserName)
@@ -75,7 +75,7 @@ class ProfileFragment(val contextParam: Context, val fm: FragmentManager) : Frag
         getUser()
         return view
     }
-
+// Метод openRegisterFragment: Этот метод открывает фрагмент регистрации пользователя, заменяя текущий фрагмент в контейнере.
     fun openRegisterFragment() {
 
         val transaction = fragmentManager?.beginTransaction()
@@ -83,13 +83,11 @@ class ProfileFragment(val contextParam: Context, val fm: FragmentManager) : Frag
         transaction?.replace(
             R.id.flFragment,
             LoginActivity(contextParam, fm)
-        )//replace the old layout with the new frag  layout
+        )
 
-        transaction?.commit()//apply changes
-
-
+        transaction?.commit()
     }
-
+// Метод getUser: Этот метод получает информацию о пользователе с сервера. Он отправляет запрос к API, чтобы получить данные о пользователе по его идентификатору. Полученные данные используются для заполнения полей профиля.
     fun getUser() {
 
         val sp = contextParam.getSharedPreferences(
@@ -104,11 +102,6 @@ class ProfileFragment(val contextParam: Context, val fm: FragmentManager) : Frag
                 try {
                     val registerUser = JSONObject()
                     registerUser.put("token", id)
-//                    registerUser.put("username", etxtUsername.text)
-//                    registerUser.put("phone", etxtMobileNumber.text)
-//                    registerUser.put("password", etxtPassword.text)
-//                    registerUser.put("address", etxtDeliveryAddress.text)
-//                    registerUser.put("email", etxtEmail.text)
 
                     val queue = Volley.newRequestQueue(activity as Context)
                     val url = ("${resources.getString(R.string.url)}login.php?method=getbyid")
@@ -185,20 +178,20 @@ class ProfileFragment(val contextParam: Context, val fm: FragmentManager) : Frag
             alterDialog.setTitle("No Internet")
             alterDialog.setMessage("Internet Connection can't be establish!")
             alterDialog.setPositiveButton("Open Settings") { text, listener ->
-                val settingsIntent = Intent(Settings.ACTION_SETTINGS)//open wifi settings
+                val settingsIntent = Intent(Settings.ACTION_SETTINGS)
                 startActivity(settingsIntent)
 
             }
 
             alterDialog.setNegativeButton("Exit") { text, listener ->
-                ActivityCompat.finishAffinity(activity as Activity)//closes all the instances of the app and the app closes completely
+                ActivityCompat.finishAffinity(activity as Activity)
             }
             alterDialog.create()
             alterDialog.show()
 
         }
     }
-
+// Метод updateUser: Этот метод отправляет измененные данные пользователя на сервер для их обновления. Он также проверяет наличие подключения к интернету и наличие ошибок ввода данных перед отправкой запроса.
     fun updateUser() {
 
         val sp = contextParam.getSharedPreferences(
@@ -285,24 +278,24 @@ class ProfileFragment(val contextParam: Context, val fm: FragmentManager) : Frag
             alterDialog.setTitle("No Internet")
             alterDialog.setMessage("Internet Connection can't be establish!")
             alterDialog.setPositiveButton("Open Settings") { text, listener ->
-                val settingsIntent = Intent(Settings.ACTION_SETTINGS)//open wifi settings
+                val settingsIntent = Intent(Settings.ACTION_SETTINGS)
                 startActivity(settingsIntent)
 
             }
 
             alterDialog.setNegativeButton("Exit") { text, listener ->
-                ActivityCompat.finishAffinity(activity as Activity)//closes all the instances of the app and the app closes completely
+                ActivityCompat.finishAffinity(activity as Activity)
             }
             alterDialog.create()
             alterDialog.show()
 
         }
     }
-
+// Метод userSuccessfullyRegistered: Этот метод открывает главный экран приложения после успешной регистрации или обновления профиля.
     fun userSuccessfullyRegistered() {
         openDashBoard()
     }
-
+// Метод openDashBoard: Этот метод открывает главный экран приложения (DashboardActivity).
     fun openDashBoard() {
 
         val intent = Intent(activity as Context, MainActivity::class.java)
@@ -310,7 +303,7 @@ class ProfileFragment(val contextParam: Context, val fm: FragmentManager) : Frag
         getActivity()?.finish()
 
     }
-
+// Метод checkForErrors: Этот метод проверяет наличие ошибок ввода данных при регистрации или обновлении профиля. Он проверяет заполнены ли все обязательные поля и совпадают ли пароли.
     fun checkForErrors(): Boolean {
         var errorPassCount = 0
         if (etxtUsername.text.isBlank()) {
@@ -338,18 +331,6 @@ class ProfileFragment(val contextParam: Context, val fm: FragmentManager) : Frag
             errorPassCount++
         }
 
-//        if (etxtConfirmPassword.text.isBlank()) {
-//            etxtConfirmPassword.setError(contextParam.resources.getString(R.string.field_missing))
-//        } else {
-//            errorPassCount++
-//        }
-//
-//        if (etxtPassword.text.isBlank()) {
-//            etxtPassword.setError(contextParam.resources.getString(R.string.field_missing))
-//        } else {
-//            errorPassCount++
-//        }
-
         if (etxtPassword.text.isNotBlank() && etxtConfirmPassword.text.isNotBlank()) {
             if (etxtPassword.text.toString().toInt() == etxtConfirmPassword.text.toString()
                     .toInt()
@@ -369,7 +350,8 @@ class ProfileFragment(val contextParam: Context, val fm: FragmentManager) : Frag
         else
             return false
     }
-
+// Метод onResume: В этом методе проверяется наличие интернет-соединения при восстановлении фрагмента после паузы. 
+// Если соединение отсутствует, отображается диалоговое окно с предложением открыть настройки соединения или выйти из приложения.
     override fun onResume() {
 
         if (!ConnectionManager().checkConnectivity(activity as Context)) {
@@ -383,7 +365,7 @@ class ProfileFragment(val contextParam: Context, val fm: FragmentManager) : Frag
             }
 
             alterDialog.setNegativeButton("Exit") { text, listener ->
-                ActivityCompat.finishAffinity(activity as Activity)//closes all the instances of the app and the app closes completely
+                ActivityCompat.finishAffinity(activity as Activity)
             }
             alterDialog.setCancelable(false)
 
