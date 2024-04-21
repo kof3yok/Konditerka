@@ -1,17 +1,21 @@
+// API для взаимодействия с ценами товаров между приложением и БД
 <?php
+// Установка заголовков CORS: Устанавливает заголовки CORS (Cross-Origin Resource Sharing), которые позволяют браузеру выполнить запрос к серверу с другого источника.
+// Обработка запросов различных методов: Принимает запросы с методами OPTIONS, GET, POST, PUT, DELETE.
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: OPTIONS,GET,POST,PUT,DELETE");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-
+// Подключение необходимых файлов и классов: Включает файлы DatabaseConnector.php, productprice.php и sendJson.php, которые содержат необходимые классы и функции для работы с базой данных и отправки JSON-ответов.
 include_once '../src/System/DatabaseConnector.php';
 include_once '../Service/productprice.php';
 include_once '../Service/sendJson.php';
-
+// Обработка POST-запросов: В зависимости от параметра method, определенного в запросе, выполняет соответствующие действия. Параметр method передается через GET-параметр.
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $method = $_GET['method'];
     switch ($method) {
+// Обработка создания новой записи: Проверяет наличие всех обязательных полей в JSON-данных, полученных из тела запроса. Если все поля присутствуют, создает новую запись в базе данных с помощью метода Create() класса ProductPrice.
         case 'create':
             try {
                 $data = json_decode(file_get_contents('php://input'));
@@ -57,6 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 sendJson(500, 'Internal Server Error');
             }
             break;
+// Обработка удаления записи: Проверяет наличие всех обязательных полей в JSON-данных, полученных из тела запроса. Если все поля присутствуют, удаляет запись из базы данных с помощью метода Delete() класса ProductPrice.
         case 'delete':
             try {
                 $data = json_decode(file_get_contents('php://input'));
@@ -85,6 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 sendJson(500, 'Internal Server Error');
             }
             break;
+// Обработка обновления записи: Проверяет наличие всех обязательных полей в JSON-данных, полученных из тела запроса. Если все поля присутствуют, обновляет запись в базе данных с помощью метода Update() класса ProductPrice.
         case 'update':
             try {
                 $data = json_decode(file_get_contents('php://input'));
@@ -128,6 +134,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 sendJson(500, 'Internal Server Error');
             }
             break;
+// Обработка активации и деактивации записи: Проверяет наличие всех обязательных полей в JSON-данных, полученных из тела запроса. 
+// Если все поля присутствуют, активирует или деактивирует запись в базе данных с помощью методов Active() и Passive() класса ProductPrice.
         case 'active':
             try {
                 $data = json_decode(file_get_contents('php://input'));
@@ -178,6 +186,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 sendJson(500, 'Internal Server Error');
             }
             break;
+// Обработка запроса на получение всех записей по ID продукта: Проверяет наличие всех обязательных полей в JSON-данных, полученных из тела запроса. 
+// Если все поля присутствуют, получает все записи из базы данных по ID продукта с помощью метода GetAllForProduct() класса ProductPrice и возвращает их в формате JSON.
         case 'getallbyproductid':
             try {
                 $data = json_decode(file_get_contents('php://input'));
@@ -194,12 +204,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $pp->ProductID = trim($data->ProductID);
                     $result = $pp->GetAllForProduct();
                     $num = $result->rowCount();
-
+// Отправка JSON-ответов: Функция sendJson() используется для отправки ответов в формате JSON с указанными HTTP-статусами и данными
                     if ($num > 0) {
                         $pp_arr = array();
                         $pp_arr["records"] = array();
                         while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                            // extract($row);
                             $pp_item = array(
                                 "ID" =>   $row['ID'],
                                 "ProductID" => $row['ProductID'],
