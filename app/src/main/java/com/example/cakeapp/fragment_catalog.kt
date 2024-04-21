@@ -104,12 +104,12 @@ class fragment_catalog(val contextParam: Context, val catalogID: String,val fm:F
             alterDialog.setTitle("No Internet")
             alterDialog.setMessage("Internet Connection can't be establish!")
             alterDialog.setPositiveButton("Open Settings") { text, listener ->
-                val settingsIntent = Intent(Settings.ACTION_SETTINGS)//open wifi settings
+                val settingsIntent = Intent(Settings.ACTION_SETTINGS)
                 startActivity(settingsIntent)
             }
 
             alterDialog.setNegativeButton("Exit") { text, listener ->
-                ActivityCompat.finishAffinity(activity as Activity)//closes all the instances of the app and the app closes completely
+                ActivityCompat.finishAffinity(activity as Activity)
             }
             alterDialog.setCancelable(false)
 
@@ -119,23 +119,23 @@ class fragment_catalog(val contextParam: Context, val catalogID: String,val fm:F
         }
     }
 
-    override fun onResume() {//once setting is opened to turn internet we again check for connection
+    override fun onResume() {
 
         if (ConnectionManager().checkConnectivity(activity as Context)) {
-            if (productList.isEmpty())//if no data is loaded previously load new data
-                getProducts()//if internet is available fetch data
+            if (productList.isEmpty())
+                getProducts()
         } else {
 
             val alterDialog = androidx.appcompat.app.AlertDialog.Builder(activity as Context)
             alterDialog.setTitle("No Internet")
             alterDialog.setMessage("Internet Connection can't be establish!")
             alterDialog.setPositiveButton("Open Settings") { text, listener ->
-                val settingsIntent = Intent(Settings.ACTION_SETTINGS)//open wifi settings
+                val settingsIntent = Intent(Settings.ACTION_SETTINGS)
                 startActivity(settingsIntent)
             }
 
             alterDialog.setNegativeButton("Exit") { text, listener ->
-                ActivityCompat.finishAffinity(activity as Activity)//closes all the instances of the app and the app closes completely
+                ActivityCompat.finishAffinity(activity as Activity)
             }
             alterDialog.setCancelable(false)
 
@@ -148,22 +148,6 @@ class fragment_catalog(val contextParam: Context, val catalogID: String,val fm:F
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment fragment_catalog.
-         */
-        // TODO: Rename and change types and number of parameters
-//        @JvmStatic
-//        fun newInstance(param1: String, param2: String) =
-//            fragment_catalog().apply {
-//                arguments = Bundle().apply {
-//                    putString(ARG_PARAM1, param1)
-//                    putString(ARG_PARAM2, param2)
-//                }
-//            }
+
     }
 }
