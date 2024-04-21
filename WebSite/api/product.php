@@ -1,17 +1,22 @@
+// // API для взаимодействия с товарами между приложением и БД
 <?php
+// Установка заголовков для CORS (Cross-Origin Resource Sharing): Эти заголовки позволяют ресурсам на одном домене запросить доступ к ресурсам на другом домене. 
+// Это включает разрешение запросов из других источников, установку методов запросов, установку максимального времени жизни запроса и разрешение определенных заголовков.
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: OPTIONS,GET,POST,PUT,DELETE");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-
+// Включение необходимых файлов и классов: Включает файлы для подключения к базе данных и классы для работы с продуктами и отправки JSON.
 include_once '../src/System/DatabaseConnector.php';
 include_once '../Service/product.php';
 include_once '../Service/sendJson.php';
-
+// Обработка запросов методом POST: Если HTTP-запрос был выполнен методом POST, код определяет параметр method в запросе GET и в зависимости от этого выполняет различные операции.
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $method = $_GET['method'];
     switch ($method) {
+// Создание нового продукта (create): Если метод запроса - create, код пытается создать новый продукт в базе данных на основе данных, переданных через тело запроса в формате JSON. 
+// При необходимости проверяются все необходимые поля, и возвращается соответствующий статус и сообщение.
         case 'create':
             try {
                 $data = json_decode(file_get_contents('php://input'));
@@ -57,6 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 sendJson(500, 'Internal Server Error');
             }
             break;
+// Удаление продукта (delete): Если метод запроса - delete, код пытается удалить продукт из базы данных на основе переданного ID. Возвращается соответствующий статус и сообщение об успешном или неудачном удалении.
         case 'delete':
             try {
                 $data = json_decode(file_get_contents('php://input'));
@@ -82,6 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 sendJson(500, 'Internal Server Error');
             }
             break;
+// Активация продукта (active): Если метод запроса - active, код пытается активировать продукт в базе данных на основе переданного ID. Возвращается соответствующий статус и сообщение об успешной или неудачной активации.
         case 'active':
             try {
                 $data = json_decode(file_get_contents('php://input'));
@@ -107,6 +114,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 sendJson(500, 'Internal Server Error');
             }
             break;
+// Обновление продукта (update): Если метод запроса - update, код пытается обновить информацию о продукте в базе данных на основе переданных данных. 
+// При необходимости проверяются все необходимые поля, и возвращается соответствующий статус и сообщение.
         case 'update':
             try {
                 $data = json_decode(file_get_contents('php://input'));
@@ -152,6 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 sendJson(500, 'Internal Server Error');
             }
             break;
+// Получение всех продуктов по ID каталога (getallbycatalogid): Если метод запроса - getallbycatalogid, код пытается получить все продукты из базы данных по указанному ID каталога. Полученные данные возвращаются в формате JSON.
         case 'getallbycatalogid':
             try {
                 $data = json_decode(file_get_contents('php://input'));
@@ -199,7 +209,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 sendJson(500, 'Internal Server Error');
             }
             break;
-
+// Получение продукта по его ID (getbyid): Если метод запроса - getbyid, код пытается получить продукт из базы данных по указанному ID. Полученные данные возвращаются в формате JSON.
             case 'getbyid':
                 try {
                     $data = json_decode(file_get_contents('php://input'));
@@ -244,10 +254,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         }
                     }
                 } catch (\Throwable $th) {
+// Обработка ошибок: Если в процессе выполнения запроса возникают ошибки, код обрабатывает их и возвращает соответствующие статусы и сообщения.
                     sendJson(500, 'Internal Server Error');
                 }
                 break;
-    
+// Возврат ошибочного статуса для недопустимых методов запроса: Если метод запроса не POST, возвращается соответствующий статус и сообщение об ошибке.
             default:
             sendJson(405, 'Invalid Request Method. HTTP method should be POST');
             break;
