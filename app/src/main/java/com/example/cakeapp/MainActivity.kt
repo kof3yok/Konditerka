@@ -132,7 +132,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
             alterDialog.setTitle("No Internet")
             alterDialog.setMessage("Internet Connection can't be establish!")
             alterDialog.setPositiveButton("Open Settings") { text, listener ->
-                val settingsIntent = Intent(Settings.ACTION_SETTINGS)//open wifi settings
+                val settingsIntent = Intent(Settings.ACTION_SETTINGS)
                 startActivity(settingsIntent)
             }
 
