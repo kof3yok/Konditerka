@@ -15,14 +15,14 @@ import com.example.cakeapp.R
 import com.example.cakeapp.data.model.Order
 import com.example.cakeapp.history_cart
 import java.text.SimpleDateFormat
-
+// Инициализация адаптера: Класс HistoryAdapter инициализируется с параметрами: контекстом (context), списком заказов (orderItems) и менеджером фрагментов (fm).
 class HistoryAdapter(
     val context: Context,
     val orderItems: ArrayList<Order>,
     val fm: FragmentManager
 ) :
     RecyclerView.Adapter<HistoryAdapter.ViewHolderHistory>() {
-
+// ViewHolder: Внутренний класс ViewHolderHistory используется для хранения ссылок на виджеты элемента инициируется из разметки history_item.xml.
     class ViewHolderHistory(view: View) : RecyclerView.ViewHolder(view) {
         val llHistory: LinearLayout = view.findViewById(R.id.llHistory)
         val txtOrderAddress: TextView = view.findViewById(R.id.txtOrderAddress)
@@ -32,18 +32,18 @@ class HistoryAdapter(
         val txtHistoryPrice: TextView = view.findViewById(R.id.txtHistoryPrice)
         val btnOpenOrder: ImageButton = view.findViewById(R.id.btnOpenOrder)
     }
-
+// onCreateViewHolder: Метод создает новый экземпляр ViewHolder при необходимости. Он надувает макет history_item для элемента списка.
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderHistory {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.history_item, parent, false)
 
         return ViewHolderHistory(view)
     }
-
+// getItemCount: Определяет количество элементов в списке заказов.
     override fun getItemCount(): Int {
         return orderItems.size
     }
-
+// onBindViewHolder: Метод связывает данные заказа с виджетами в ViewHolder. Он устанавливает значения текста и цвета фона в соответствии с данными заказа. Также устанавливает обработчик нажатия кнопки для открытия заказа.
     override fun onBindViewHolder(holder: ViewHolderHistory, position: Int) {
         val orderItemObject = orderItems[position]
         holder.txtOrderAddress.text = orderItemObject.Address
@@ -68,7 +68,7 @@ class HistoryAdapter(
         }
         holder.txtHistoryDriver.text = orderItemObject.Driver
         holder.txtHistoryPrice.text = orderItemObject.Price.toString() + " ₽"
-
+// Обработчик нажатия кнопки: При нажатии на кнопку открывается новый фрагмент history_cart, передавая необходимые данные о заказе (ID, адрес, цена) в качестве аргументов.
         holder.btnOpenOrder.setOnClickListener {
             fm.beginTransaction().replace(
                 R.id.flFragment,
@@ -76,5 +76,4 @@ class HistoryAdapter(
             ).commit()
         }
     }
-
 }
