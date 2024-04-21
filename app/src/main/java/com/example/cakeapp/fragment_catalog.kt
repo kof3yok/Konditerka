@@ -25,13 +25,13 @@ import com.google.gson.Gson
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.HashMap
-
+// Класс fragment_catalog: Этот класс является фрагментом, который отображает список продуктов из каталога. Он наследуется от класса Fragment.
 class fragment_catalog(val contextParam: Context, val catalogID: String,val fm:FragmentManager) : Fragment() {
     private var columnCount = 2
     lateinit var recyclerView: RecyclerView
     lateinit var layoutManager: RecyclerView.LayoutManager
     var productList = arrayListOf<Product>()
-
+// Метод onCreate: В этом методе происходит инициализация фрагмента. В частности, устанавливается количество столбцов в RecyclerView.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -39,7 +39,7 @@ class fragment_catalog(val contextParam: Context, val catalogID: String,val fm:F
             columnCount = it.getInt(ItemFragment.ARG_COLUMN_COUNT)
         }
     }
-
+// Метод onCreateView: В этом методе создается и настраивается макет фрагмента. Устанавливается менеджер компоновки для RecyclerView.
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,7 +49,8 @@ class fragment_catalog(val contextParam: Context, val catalogID: String,val fm:F
         recyclerView = view.findViewById(R.id.list)
         return view
     }
-
+// Метод getProducts: Этот метод выполняет запрос к серверу для получения списка продуктов из указанного каталога. 
+// Если устройство подключено к интернету, отправляется запрос на сервер с использованием Volley. После получения данных, они преобразуются в объекты класса Product, а затем отображаются в RecyclerView.
     fun getProducts() {
         if (ConnectionManager().checkConnectivity(activity as Context)) {
             try {
@@ -118,7 +119,8 @@ class fragment_catalog(val contextParam: Context, val catalogID: String,val fm:F
 
         }
     }
-
+// Метод onResume: В этом методе происходит проверка подключения к интернету при возобновлении работы фрагмента. 
+// Если подключение отсутствует, отображается диалоговое окно с предложением открыть настройки или выйти из приложения. Если подключение есть и список продуктов пуст, вызывается метод getProducts.
     override fun onResume() {
 
         if (ConnectionManager().checkConnectivity(activity as Context)) {
@@ -146,8 +148,7 @@ class fragment_catalog(val contextParam: Context, val catalogID: String,val fm:F
 
         super.onResume()
     }
-
+// Companion object: В компаньон-объекте может содержаться дополнительная логика, но в данном случае он пуст.
     companion object {
-
     }
 }
