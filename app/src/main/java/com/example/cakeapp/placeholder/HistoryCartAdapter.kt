@@ -54,7 +54,6 @@ class HistoryCartAdapter(
 // Декодирование изображения: Данные об изображении декодируются из формата Base64 в байты, а затем в изображение с помощью BitmapFactory.
         val imageBytes = Base64.decode(cartItemObject.Image, Base64.DEFAULT)
         val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-        //Picasso.get().load(item.Image).into(holder.image)
         holder.image.setImageBitmap(decodedImage)
         holder.image.setOnClickListener {
             fm.beginTransaction().replace(
