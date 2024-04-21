@@ -110,12 +110,12 @@ class ItemFragment(val contextParam: Context,val fm:FragmentManager) : Fragment(
             alterDialog.setTitle("No Internet")
             alterDialog.setMessage("Internet Connection can't be establish!")
             alterDialog.setPositiveButton("Open Settings") { text, listener ->
-                val settingsIntent = Intent(Settings.ACTION_SETTINGS)//open wifi settings
+                val settingsIntent = Intent(Settings.ACTION_SETTINGS)
                 startActivity(settingsIntent)
             }
 
             alterDialog.setNegativeButton("Exit") { text, listener ->
-                ActivityCompat.finishAffinity(activity as Activity)//closes all the instances of the app and the app closes completely
+                ActivityCompat.finishAffinity(activity as Activity)
             }
             alterDialog.setCancelable(false)
 
@@ -137,12 +137,12 @@ class ItemFragment(val contextParam: Context,val fm:FragmentManager) : Fragment(
             alterDialog.setTitle("No Internet")
             alterDialog.setMessage("Internet Connection can't be establish!")
             alterDialog.setPositiveButton("Open Settings") { text, listener ->
-                val settingsIntent = Intent(Settings.ACTION_SETTINGS)//open wifi settings
+                val settingsIntent = Intent(Settings.ACTION_SETTINGS)
                 startActivity(settingsIntent)
             }
 
             alterDialog.setNegativeButton("Exit") { text, listener ->
-                ActivityCompat.finishAffinity(activity as Activity)//closes all the instances of the app and the app closes completely
+                ActivityCompat.finishAffinity(activity as Activity)
             }
             alterDialog.setCancelable(false)
 
