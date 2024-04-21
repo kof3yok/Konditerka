@@ -32,7 +32,8 @@ import com.google.android.material.tabs.TabLayout
 import com.google.gson.Gson
 import org.json.JSONException
 import org.json.JSONObject
-
+// Класс item_detail: Это класс-фрагмент, который используется для отображения деталей товара в приложении. 
+// Он наследует Fragment и содержит логику для отображения изображения товара, названия, цены и других деталей, а также для добавления товара в корзину.
 class item_detail(
     val contextParam: Context,
     val productID: String,
@@ -46,6 +47,8 @@ class item_detail(
     lateinit var tabLayoutProduct: TabLayout
     lateinit var product: Product
     lateinit var pager: ViewPager
+// Метод onCreateView: Переопределенный метод, который создает и возвращает макет фрагмента. 
+// Внутри этого метода происходит настройка пользовательского интерфейса, инициализация переменных и вызов метода getProduct() для получения данных о товаре.
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -62,7 +65,8 @@ class item_detail(
         getProduct()
         return view
     }
-
+// Метод getProduct: Этот метод отправляет запрос на сервер для получения информации о товаре с помощью библиотеки Volley. 
+// После получения данных, метод обновляет пользовательский интерфейс, отображая изображение товара, название, описание, цены и другие детали.
     fun getProduct() {
         if (ConnectionManager().checkConnectivity(activity as Context)) {
             try {
@@ -87,7 +91,6 @@ class item_detail(
                             val imageBytes = Base64.decode(product.Image, Base64.DEFAULT)
                             val decodedImage =
                                 BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-                            //Picasso.get().load(item.Image).into(holder.image)
                             imgProduct.setImageBitmap(decodedImage)
                         }
                         txtProductName.text = product.Name
@@ -215,12 +218,12 @@ class item_detail(
             alterDialog.setTitle("No Internet")
             alterDialog.setMessage("Internet Connection can't be establish!")
             alterDialog.setPositiveButton("Open Settings") { text, listener ->
-                val settingsIntent = Intent(Settings.ACTION_SETTINGS)//open wifi settings
+                val settingsIntent = Intent(Settings.ACTION_SETTINGS)
                 startActivity(settingsIntent)
             }
 
             alterDialog.setNegativeButton("Exit") { text, listener ->
-                ActivityCompat.finishAffinity(activity as Activity)//closes all the instances of the app and the app closes completely
+                ActivityCompat.finishAffinity(activity as Activity)
             }
             alterDialog.setCancelable(false)
 
@@ -229,7 +232,8 @@ class item_detail(
 
         }
     }
-
+// Метод addBasket: Этот метод вызывается при нажатии на кнопку "Добавить в корзину". Он отправляет запрос на сервер для добавления товара в корзину пользователя. 
+// Если пользователь не авторизован, выводится сообщение об ошибке, иначе товар добавляется в корзину, и пользователю отображается сообщение об успешном добавлении.
     fun addBasket(btn: MaterialButton) {
         val sp = contextParam.getSharedPreferences(
             R.string.shared_preferences.toString(),
@@ -243,7 +247,6 @@ class item_detail(
                 Toast.LENGTH_SHORT
             ).show()
         } else {
-
 
             val bd = btn.getTag() as ArrayList<String>
             if (ConnectionManager().checkConnectivity(contextParam as Context)) {
@@ -299,18 +302,17 @@ class item_detail(
                 alterDialog.setTitle("No Internet")
                 alterDialog.setMessage("Internet Connection can't be establish!")
                 alterDialog.setPositiveButton("Open Settings") { text, listener ->
-                    val settingsIntent = Intent(Settings.ACTION_SETTINGS)//open wifi settings
-                    //startActivity(settingsIntent)
+                    val settingsIntent = Intent(Settings.ACTION_SETTINGS)
                 }
 
                 alterDialog.setNegativeButton("Exit") { text, listener ->
-                    ActivityCompat.finishAffinity(context as Activity)//closes all the instances of the app and the app closes completely
+                    ActivityCompat.finishAffinity(context as Activity)
                 }
                 alterDialog.setCancelable(false)
 
                 alterDialog.create()
                 alterDialog.show()
-
+// Обработка соединения с интернетом: Если соединение с интернетом отсутствует, приложение выводит диалоговое окно с предложением открыть настройки для включения интернета или выхода из приложения.
             }
         }
     }
