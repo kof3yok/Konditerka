@@ -200,11 +200,11 @@ class CartAdapter(
             alterDialog.setTitle("No Internet")
             alterDialog.setMessage("Internet Connection can't be establish!")
             alterDialog.setPositiveButton("Open Settings") { text, listener ->
-                val settingsIntent = Intent(Settings.ACTION_SETTINGS)//open wifi settings
+                val settingsIntent = Intent(Settings.ACTION_SETTINGS)
             }
 
             alterDialog.setNegativeButton("Exit") { text, listener ->
-                ActivityCompat.finishAffinity(context as Activity)//closes all the instances of the app and the app closes completely
+                ActivityCompat.finishAffinity(context as Activity)
             }
             alterDialog.create()
             alterDialog.show()
@@ -286,11 +286,11 @@ class CartAdapter(
             alterDialog.setTitle("No Internet")
             alterDialog.setMessage("Internet Connection can't be establish!")
             alterDialog.setPositiveButton("Open Settings") { text, listener ->
-                val settingsIntent = Intent(Settings.ACTION_SETTINGS)//open wifi settings
+                val settingsIntent = Intent(Settings.ACTION_SETTINGS)
             }
 
             alterDialog.setNegativeButton("Exit") { text, listener ->
-                ActivityCompat.finishAffinity(context as Activity)//closes all the instances of the app and the app closes completely
+                ActivityCompat.finishAffinity(context as Activity)
             }
             alterDialog.create()
             alterDialog.show()
