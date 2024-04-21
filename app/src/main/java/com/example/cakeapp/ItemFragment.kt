@@ -34,9 +34,6 @@ import java.net.URL
 import java.net.URLEncoder
 import java.util.HashMap
 
-/**
- * A fragment representing a list of Items.
- */
 class ItemFragment(val contextParam: Context,val fm:FragmentManager) : Fragment() {
 
     private var columnCount = 2
@@ -50,7 +47,7 @@ class ItemFragment(val contextParam: Context,val fm:FragmentManager) : Fragment(
             columnCount = it.getInt(ARG_COLUMN_COUNT)
         }
     }
-
+// onCreateView(): Этот метод вызывается для создания и настройки макета фрагмента. Внутри него устанавливается макет для списка продуктов и менеджер компоновки для RecyclerView.
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,19 +55,11 @@ class ItemFragment(val contextParam: Context,val fm:FragmentManager) : Fragment(
         val view = inflater.inflate(R.layout.fragment_item_list, container, false)
         layoutManager = GridLayoutManager(context, columnCount)
         recyclerView = view.findViewById(R.id.list)
-        // Set the adapter
-//        if (view is RecyclerView) {
-//            with(view) {
-//                layoutManager = when {
-//                    columnCount <= 1 -> LinearLayoutManager(context)
-//                    else -> GridLayoutManager(context, columnCount)
-//                }
-//                adapter = MyItemRecyclerViewAdapter(PlaceholderContent.ITEMS)
-//            }
-//        }
+
         return view
     }
-
+// getProducts(): Этот метод отвечает за получение списка продуктов с сервера. 
+// Он использует Volley для выполнения запроса к серверу, получения списка продуктов в формате JSON, их парсинга с помощью библиотеки Gson, и затем заполнения RecyclerView адаптером с полученными данными.
     fun getProducts() {
         if (ConnectionManager().checkConnectivity(activity as Context)) {
             try {
@@ -135,12 +124,13 @@ class ItemFragment(val contextParam: Context,val fm:FragmentManager) : Fragment(
 
         }
     }
-
-    override fun onResume() {//once setting is opened to turn internet we again check for connection
+// onResume(): Этот метод вызывается при возобновлении фрагмента. Внутри него проверяется наличие интернет-соединения, и если оно есть, вызывается метод getProducts(). 
+// Если интернет-соединение отсутствует, выводится диалоговое окно с предложением открыть настройки или выйти из приложения.
+    override fun onResume() {
 
         if (ConnectionManager().checkConnectivity(activity as Context)) {
-            if (productList.isEmpty())//if no data is loaded previously load new data
-                getProducts()//if internet is available fetch data
+            if (productList.isEmpty())
+                getProducts()
         } else {
 
             val alterDialog = androidx.appcompat.app.AlertDialog.Builder(activity as Context)
@@ -163,19 +153,10 @@ class ItemFragment(val contextParam: Context,val fm:FragmentManager) : Fragment(
 
         super.onResume()
     }
-
+// Companion object: Это внутренний объект фрагмента, содержащий константу ARG_COLUMN_COUNT, которая используется для указания количества столбцов в RecyclerView.
     companion object {
 
-        // TODO: Customize parameter argument names
         const val ARG_COLUMN_COUNT = "column-count"
 
-        // TODO: Customize parameter initialization
-//        @JvmStatic
-//        fun newInstance(columnCount: Int) =
-//            ItemFragment().apply {
-//                arguments = Bundle().apply {
-//                    putInt(ARG_COLUMN_COUNT, columnCount)
-//                }
-//            }
     }
 }
