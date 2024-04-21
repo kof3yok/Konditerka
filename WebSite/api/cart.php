@@ -1,17 +1,21 @@
+// API для взаимодействия с корзиной между приложением и БД
 <?php
+// Установка заголовков CORS: Устанавливает заголовки для обеспечения Cross-Origin Resource Sharing (CORS). Это позволяет разрешить запросы с других источников, кроме источника, с которого была загружена веб-страница.
+// Включение заголовков запроса: Устанавливает разрешенные методы запросов (OPTIONS, GET, POST, PUT, DELETE) и другие заголовки, необходимые для взаимодействия с ресурсом.
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: OPTIONS,GET,POST,PUT,DELETE");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-
+// Подключение необходимых файлов и классов: Включает файлы DatabaseConnector.php, cart.php и sendJson.php, которые содержат необходимые классы и функции для работы с базой данных и отправки JSON-ответов.
 include_once '../src/System/DatabaseConnector.php';
 include_once '../Service/cart.php';
 include_once '../Service/sendJson.php';
-
+// Обработка POST-запросов: Проверяет тип запроса (POST) и обрабатывает его содержимое в зависимости от переданного значения параметра method.
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $method = $_GET['method'];
     switch ($method) {
+// Обработка запроса на создание элемента корзины (create): Создает новую запись в корзине на основе данных, переданных в теле запроса JSON. Проверяет наличие обязательных полей и создает новую запись в базе данных.
         case 'create':
             try {
                 $data = json_decode(file_get_contents('php://input'));
@@ -42,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 sendJson(500, 'Internal Server Error');
             }
             break;
+// Обработка запроса на удаление элемента корзины (delete): Удаляет элемент корзины по переданным идентификаторам пользователя и элемента.
         case 'delete':
             try {
                 $data = json_decode(file_get_contents('php://input'));
@@ -68,6 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 sendJson(500, 'Internal Server Error');
             }
             break;
+// Обработка запроса на обновление элемента корзины (update): Обновляет данные элемента корзины по переданным идентификатору элемента и количеству.
         case 'update':
             try {
                 $data = json_decode(file_get_contents('php://input'));
@@ -95,6 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 sendJson(500, 'Internal Server Error');
             }
             break;
+// Обработка запроса на получение всех элементов корзины пользователя (getall): Получает все элементы корзины для указанного пользователя. Возвращает массив объектов корзины в формате JSON.
         case "getall":
             try {
                 $data = json_decode(file_get_contents('php://input'));
@@ -149,4 +156,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
     }
 }
+// Обработка ошибок: Обрабатывает исключения и возвращает соответствующие коды состояния HTTP и сообщения об ошибке в случае возникновения ошибок во время обработки запроса.
 sendJson(405, 'Invalid Request Method. HTTP method should be POST');
