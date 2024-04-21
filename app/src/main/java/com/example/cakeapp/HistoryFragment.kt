@@ -31,7 +31,7 @@ import com.google.gson.GsonBuilder
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.Date
-
+// Класс HistoryFragment: Определяет фрагмент, отображающий историю заказов.
 class HistoryFragment(
     val contextParam: Context,
     val fm: FragmentManager
@@ -43,11 +43,12 @@ class HistoryFragment(
     lateinit var layoutManager: RecyclerView.LayoutManager
     lateinit var recyclerView: RecyclerView
     lateinit var menuAdapter: HistoryAdapter
+// Функция onCreateView: Создает и возвращает представление фрагмента, загружая макет из файла fragment_history.xml и инициализируя необходимые элементы пользовательского интерфейса.
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
         val view = inflater.inflate(R.layout.fragment_history, container, false)
 
         activity_history_Progressdialog = view.findViewById(R.id.activity_history_Progressdialog)
@@ -57,7 +58,9 @@ class HistoryFragment(
         recyclerView = view.findViewById(R.id.historyRecyclerViewCart)
         return view
     }
-
+/* Функция fetchData: Выполняет запрос на сервер для получения данных о заказах пользователя. 
+Если пользователь авторизован (имеется его идентификатор в SharedPreferences), то создается JSON-объект с этим идентификатором и отправляется на сервер. 
+Полученные данные обрабатываются с использованием библиотеки Gson для преобразования JSON в объекты классов Kotlin.*/
     fun fetchData() {
 
         val sp = contextParam.getSharedPreferences(
@@ -76,16 +79,11 @@ class HistoryFragment(
                     try {
                         val registerUser = JSONObject()
                         registerUser.put("UserID", id)
-//                    registerUser.put("username", etxtUsername.text)
-//                    registerUser.put("phone", etxtMobileNumber.text)
-//                    registerUser.put("password", etxtPassword.text)
-//                    registerUser.put("address", etxtDeliveryAddress.text)
-//                    registerUser.put("email", etxtEmail.text)
+)
 
                         val queue = Volley.newRequestQueue(activity as Context)
                         val url =
                             ("${resources.getString(R.string.url)}userorder.php?method=getall")
-
 
                         val jsonObjectRequest = object : JsonObjectRequest(
                             Request.Method.POST,
@@ -110,13 +108,14 @@ class HistoryFragment(
                                         )
                                     if (result.size > 0) {
                                         orderList.addAll(result)
-
+                                /* Обработка ответа от сервера: Обработчик ответа JSON от сервера проверяет статус ответа и, в случае успеха, обновляет список заказов на основе полученных данных. 
+                                 Затем этот список связывается с адаптером HistoryAdapter для отображения в RecyclerView.*/
                                         menuAdapter = HistoryAdapter(
                                             contextParam,//pass the relativelayout which has the button to enable it later
                                             orderList,
                                             fm
-                                        )//set the adapter with the data
-
+                                        )
+            
                                         recyclerView.adapter =
                                             menuAdapter//bind the  recyclerView to the adapter
 
@@ -129,7 +128,7 @@ class HistoryFragment(
                                             contextParam,//pass the relativelayout which has the button to enable it later
                                             orderList,
                                             fm
-                                        )//set the adapter with the data
+                                        )
 
                                         recyclerView.adapter =
                                             menuAdapter//bind the  recyclerView to the adapter
@@ -199,7 +198,9 @@ class HistoryFragment(
             }
         }
     }
-
+/* Функция onResume: Вызывается при возобновлении фрагмента и выполняет проверку наличия интернет-соединения. 
+Если соединение отсутствует, отображается диалоговое окно с предложением открыть настройки или завершить приложение. 
+В противном случае выполняется функция fetchData для получения данных о заказах.*/
     override fun onResume() {
 
         if (!ConnectionManager().checkConnectivity(activity as Context)) {
