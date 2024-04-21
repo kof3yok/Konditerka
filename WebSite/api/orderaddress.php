@@ -1,3 +1,4 @@
+// API для взаимодействия с данными об адресе заказа между приложением и БД
 <?php
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
