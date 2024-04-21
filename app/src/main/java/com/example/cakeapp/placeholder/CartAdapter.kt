@@ -35,7 +35,7 @@ import com.example.cakeapp.utils.ConnectionManager
 import com.google.gson.Gson
 import org.json.JSONException
 import org.json.JSONObject
-
+// Класс CartAdapter: Этот класс наследуется от RecyclerView.Adapter и отвечает за связь данных между источником данных (в данном случае ArrayList<CartModel>) и представлением на экране пользователя.
 class CartAdapter(
     val context: Context,
     val cartItems: ArrayList<CartModel>,
@@ -48,7 +48,7 @@ class CartAdapter(
     }
 
     var LostFocus = false
-
+// ViewHolderCart: Этот класс представляет элемент RecyclerView. Он содержит ссылки на различные виджеты, такие как текстовые поля, кнопки и изображения, которые отображаются в элементе списка.
     class ViewHolderCart(view: View) : RecyclerView.ViewHolder(view) {
         val textViewOrderItem: TextView = view.findViewById(R.id.textViewOrderItem)
         val textViewOrderItemPrice: TextView = view.findViewById(R.id.textViewOrderItemPrice)
@@ -60,17 +60,18 @@ class CartAdapter(
         val btnCartDec: Button = view.findViewById(R.id.btnCartDec)
         val btnCartInc: Button = view.findViewById(R.id.btnCartInc)
     }
-
+// onCreateViewHolder(): Этот метод вызывается, когда RecyclerView требуется новый ViewHolder для элемента. Он создает новый экземпляр ViewHolderCart, связывает его с макетом элемента списка и возвращает его.
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderCart {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.cart_recycler_view_single_row, parent, false)
         return ViewHolderCart(view)
     }
-
+// getItemCount(): Этот метод возвращает общее количество элементов в списке.
     override fun getItemCount(): Int {
         return cartItems.size
     }
-
+// onBindViewHolder(): Этот метод вызывается, когда RecyclerView требуется привязать данные к ViewHolder. 
+// Он заполняет содержимое элемента списка данными из cartItems и устанавливает обработчики событий для кнопок увеличения, уменьшения и удаления элементов из корзины.
     override fun onBindViewHolder(holder: ViewHolderCart, position: Int) {
         val cartItemObject = cartItems[position]
         holder.quantity.filters = arrayOf<InputFilter>(MinMaxFilter(0, 999))
@@ -106,60 +107,12 @@ class CartAdapter(
             updateCart(cartItemObject.ID, cartItemObject.Quantity)
 
         }
-//        holder.quantity.addTextChangedListener(object : TextWatcher {
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-//                // Metin değişmeden önce
-//            }
-//
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//                if (s.toString() != "") {
-//
-//                    if (holder.quantity.text.toString().toInt() == 0) {
-//                        holder.quantity.setText("1")
-//                        cartItemObject.Quantity = 1
-//                    } else cartItemObject.Quantity = holder.quantity.text.toString().toInt()
-//                    holder.textViewOrderItemTotalPrice.text =
-//                        Math.round(cartItemObject.Price * cartItemObject.Quantity).toString()
-//
-//                    updateCart(cartItemObject.ID, cartItemObject.Quantity)
-//                } else {
-//                    // Metin değiştiği anda
-////                    holder.quantity.setText("1")
-////                    cartItemObject.Quantity = 1
-////                    holder.textViewOrderItemTotalPrice.text =
-////                        (cartItemObject.Price * cartItemObject.Quantity).toString()
-//                    // Burada yapmak istediğiniz işlemleri gerçekleştirebilirsiniz
-//
-//                }
-//            }
-//
-//            override fun afterTextChanged(s: Editable?) {
-//                // Metin değiştikten sonra
-//            }
-//        })
-
-//        holder.quantity.setOnFocusChangeListener { view, hasFocus ->
-//            if (!hasFocus) {
-//                if (holder.quantity.text.toString() == "") {
-//                    holder.quantity.setText("1")
-//                    cartItemObject.Quantity = 1
-//                    holder.textViewOrderItemTotalPrice.text =
-//                        (cartItemObject.Price * cartItemObject.Quantity).toString()
-//                } else if (holder.quantity.text.toString() == "0") {
-//                    holder.quantity.setText("1")
-//                    cartItemObject.Quantity = 1
-//                    holder.textViewOrderItemTotalPrice.text =
-//                        (cartItemObject.Price * cartItemObject.Quantity).toString()
-//                }
-//            }
-//        }
 
         holder.btnDeleteCartProduct.setOnClickListener {
             deleteCart(cartItemObject.ID, cartItemObject.UserID, position)
         }
         val imageBytes = Base64.decode(cartItemObject.Image, Base64.DEFAULT)
         val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-        //Picasso.get().load(item.Image).into(holder.image)
         holder.image.setImageBitmap(decodedImage)
         holder.image.setOnClickListener {
             fm.beginTransaction().replace(
@@ -168,7 +121,7 @@ class CartAdapter(
             ).commit()
         }
     }
-
+// deleteCart(): Этот метод выполняет удаление элемента из корзины. Он отправляет запрос на удаление на сервер и, при успешном ответе, удаляет элемент из cartItems.
     fun deleteCart(cartID: String, userID: String, position: Int) {
 
         if (ConnectionManager().checkConnectivity(context as Context)) {
@@ -179,10 +132,6 @@ class CartAdapter(
                     val registerUser = JSONObject()
                     registerUser.put("id", cartID)
                     registerUser.put("userid", userID)
-//                    registerUser.put("phone", etxtMobileNumber.text)
-//                    registerUser.put("password", etxtPassword.text)
-//                    registerUser.put("address", etxtDeliveryAddress.text)
-//                    registerUser.put("email", etxtEmail.text)
 
                     val queue = Volley.newRequestQueue(context as Context)
                     val url = ("${context.resources.getString(R.string.url)}cart.php?method=delete")
@@ -262,7 +211,7 @@ class CartAdapter(
 
         }
     }
-
+// updateCart(): Этот метод выполняет обновление количества элементов в корзине. Он отправляет запрос на сервер с новым количеством товара, а затем обновляет данные в cartItems.
     fun updateCart(cartID: String, quantity: Int) {
 
         if (ConnectionManager().checkConnectivity(context as Context)) {
@@ -273,10 +222,6 @@ class CartAdapter(
                     val registerUser = JSONObject()
                     registerUser.put("id", cartID)
                     registerUser.put("quantity", quantity)
-//                    registerUser.put("phone", etxtMobileNumber.text)
-//                    registerUser.put("password", etxtPassword.text)
-//                    registerUser.put("address", etxtDeliveryAddress.text)
-//                    registerUser.put("email", etxtEmail.text)
 
                     val queue = Volley.newRequestQueue(context as Context)
                     val url = ("${context.resources.getString(R.string.url)}cart.php?method=update")
@@ -352,12 +297,11 @@ class CartAdapter(
 
         }
     }
-
+// MinMaxFilter(): Это внутренний класс, реализующий интерфейс InputFilter. Он ограничивает вводимое пользователем количество товара в корзине от минимального до максимального значения.
     inner class MinMaxFilter() : InputFilter {
         private var intMin: Int = 0
         private var intMax: Int = 0
 
-        // Initialized
         constructor(minValue: Int, maxValue: Int) : this() {
             this.intMin = minValue
             this.intMax = maxValue
@@ -382,8 +326,6 @@ class CartAdapter(
             return ""
         }
 
-        // Check if input c is in between min a and max b and
-        // returns corresponding boolean
         private fun isInRange(a: Int, b: Int, c: Int): Boolean {
             return if (b > a) c in a..b else c in b..a
         }
