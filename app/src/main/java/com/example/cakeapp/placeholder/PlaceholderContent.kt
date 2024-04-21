@@ -13,40 +13,27 @@ import com.google.gson.JsonObject
 import java.util.ArrayList
 import java.util.HashMap
 import android.os.Bundle
-
-/**
- * Helper class for providing sample content for user interfaces created by
- * Android template wizards.
- *
- * TODO: Replace all uses of this class before publishing your app.
- */
+// Инициализация списка и карты элементов: Объект содержит две коллекции: ITEMS - список элементов PlaceholderItem и ITEM_MAP - карта, связывающая идентификатор элемента с самим элементом.
 object PlaceholderContent {
 
-    /**
-     * An array of sample (placeholder) items.
-     */
     val ITEMS: MutableList<PlaceholderItem> = ArrayList()
 
-    /**
-     * A map of sample (placeholder) items, by ID.
-     */
     val ITEM_MAP: MutableMap<String, PlaceholderItem> = HashMap()
-
+// Создание фиктивных данных: В блоке init происходит инициализация списка ITEMS с помощью цикла for, где для каждого значения i от 1 до COUNT (25 в данном случае) вызывается функция createPlaceholderItem(i) для создания элемента и добавления его в список.
     private val COUNT = 25
 
     init {
-        // Add some sample items.
         for (i in 1..COUNT) {
             addItem(createPlaceholderItem(i))
         }
     }
 
-
+// Добавление элемента в список и карту: Функция addItem добавляет переданный элемент в список ITEMS и карту ITEM_MAP. Это позволяет быстро находить элементы по их идентификатору.
     private fun addItem(item: PlaceholderItem) {
         ITEMS.add(item)
         ITEM_MAP.put(item.id, item)
     }
-
+// Создание элемента-заглушки: Функция createPlaceholderItem создает и возвращает новый элемент PlaceholderItem. Этот элемент имеет идентификатор (генерируемый на основе позиции), описание, цену, вторую цену и ссылку на изображение.
     private fun createPlaceholderItem(position: Int): PlaceholderItem {
         return PlaceholderItem(
             position.toString(),
@@ -56,11 +43,7 @@ object PlaceholderContent {
             position.toString()
         )
     }
-
-
-    /**
-     * A placeholder item representing a piece of content.
-     */
+// Описание элемента PlaceholderItem: Вложенный класс PlaceholderItem представляет собой модель элемента-заглушки. Он содержит поля для идентификатора, описания, цены, второй цены и ссылки на изображение.
     data class PlaceholderItem(
         val id: String, val description: String, val price: Double,
         val price2: Double, val image: String
