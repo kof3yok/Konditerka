@@ -30,7 +30,9 @@ import com.example.cakeapp.utils.ConnectionManager
 import com.google.gson.Gson
 import org.json.JSONException
 import org.json.JSONObject
-
+// Инициализация переменных и элементов интерфейса: 
+// В методе onCreateView, переменные и элементы интерфейса инициализируются, такие как historyCartAddressFrom, historyCartLL, historyCartProgress, btnHistoryTotal, recyclerView и layoutManager. 
+// Также устанавливается адрес заказа и текст для кнопки с общей суммой заказа.
 class history_cart(
     val contextParam: Context,
     val orderID: String,
@@ -55,7 +57,6 @@ class history_cart(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_history_cart, container, false)
 
         historyCartAddressFrom = view.findViewById(R.id.historyCartAddressFrom)
@@ -63,16 +64,17 @@ class history_cart(
         historyCartProgress = view.findViewById(R.id.historyCartProgress)
         btnHistoryTotal = view.findViewById(R.id.btnHistoryTotal)
 
-        layoutManager = LinearLayoutManager(contextParam)//set the layout manager
+        layoutManager = LinearLayoutManager(contextParam)
 
         recyclerView = view.findViewById(R.id.historyRecyclerViewCart)
         historyCartAddressFrom.text = address
         btnHistoryTotal.text = contextParam.resources.getString(R.string.total) + " $price ₽"
         return view
     }
-
+// Загрузка данных о заказе: Метод fetchData() выполняет загрузку данных о заказе из сервера. 
+// Для этого отправляется POST-запрос к серверу, содержащий ID заказа. После получения ответа от сервера данные обрабатываются и отображаются в RecyclerView.
     fun fetchData() {
-
+// Обработка ответа от сервера: В случае успешного ответа от сервера данные обрабатываются с помощью Gson и отображаются в RecyclerView. В случае ошибки выводится сообщение об ошибке.
         val sp = contextParam.getSharedPreferences(
             R.string.shared_preferences.toString(),
             Context.MODE_PRIVATE
@@ -125,13 +127,13 @@ class history_cart(
                                         menuAdapter = HistoryCartAdapter(
                                             contextParam,
                                             cartListItems, fm
-                                        )//set the adapter with the data
+                                        )
 
                                         recyclerView.adapter =
-                                            menuAdapter//bind the  recyclerView to the adapter
+                                            menuAdapter
 
                                         recyclerView.layoutManager =
-                                            layoutManager //bind the  recyclerView to the layoutManager
+                                            layoutManager 
 
                                     } else {
 
@@ -139,10 +141,10 @@ class history_cart(
                                         menuAdapter = HistoryCartAdapter(
                                             contextParam,
                                             cartListItems, fm
-                                        )//set the adapter with the data
+                                        )
 
                                         recyclerView.adapter =
-                                            menuAdapter//bind the  recyclerView to the adapter
+                                            menuAdapter
 
                                         recyclerView.layoutManager =
                                             layoutManager
@@ -195,13 +197,13 @@ class history_cart(
                 alterDialog.setTitle("No Internet")
                 alterDialog.setMessage("Internet Connection can't be establish!")
                 alterDialog.setPositiveButton("Open Settings") { text, listener ->
-                    val settingsIntent = Intent(Settings.ACTION_SETTINGS)//open wifi settings
+                    val settingsIntent = Intent(Settings.ACTION_SETTINGS)
                     startActivity(settingsIntent)
 
                 }
 
                 alterDialog.setNegativeButton("Exit") { text, listener ->
-                    ActivityCompat.finishAffinity(activity as Activity)//closes all the instances of the app and the app closes completely
+                    ActivityCompat.finishAffinity(activity as Activity)
                 }
                 alterDialog.create()
                 alterDialog.show()
@@ -209,21 +211,21 @@ class history_cart(
             }
         }
     }
-
+// Обработка onResume(): Метод onResume() выполняет проверку наличия интернет-соединения при возвращении на фрагмент. Если соединение отсутствует, выводится сообщение и предлагается открыть настройки или завершить приложение.
     override fun onResume() {
-
+// Проверка подключения к интернету: Перед загрузкой данных происходит проверка подключения к интернету. Если подключение отсутствует, выводится диалоговое окно с предложением открыть настройки и позволяющее завершить приложение.
         if (!ConnectionManager().checkConnectivity(activity as Context)) {
 
             val alterDialog = androidx.appcompat.app.AlertDialog.Builder(activity as Context)
             alterDialog.setTitle("No Internet")
             alterDialog.setMessage("Internet Connection can't be establish!")
             alterDialog.setPositiveButton("Open Settings") { text, listener ->
-                val settingsIntent = Intent(Settings.ACTION_SETTINGS)//open wifi settings
+                val settingsIntent = Intent(Settings.ACTION_SETTINGS)
                 startActivity(settingsIntent)
             }
 
             alterDialog.setNegativeButton("Exit") { text, listener ->
-                ActivityCompat.finishAffinity(activity as Activity)//closes all the instances of the app and the app closes completely
+                ActivityCompat.finishAffinity(activity as Activity)
             }
             alterDialog.setCancelable(false)
 
