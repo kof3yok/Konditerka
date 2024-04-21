@@ -1,20 +1,25 @@
+// API для взаимодействия с данными для входа в приложение между приложением и БД
 <?php
+// Установка заголовков CORS: Устанавливает заголовки CORS для обработки запросов из другого источника. Это позволяет клиентскому приложению обращаться к этому API из других доменов.
+// Включение заголовков запроса: Устанавливает разрешенные методы и максимальное время жизни запроса.
+// Включение необходимых заголовков: Указывает разрешенные заголовки, которые могут быть использованы в запросах.
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: OPTIONS,GET,POST,PUT,DELETE");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-
+// Подключение необходимых файлов и классов: Включает файлы с определением классов и функций, которые будут использоваться для обработки запросов.
 include_once '../src/System/DatabaseConnector.php';
 include_once '../Service/login.php';
 include_once '../Service/user.php';
 include_once '../Service/address.php';
 include_once '../Service/mail.php';
 include_once '../Service/sendJson.php';
-
+// Обработка POST-запросов: Проверяет тип запроса (POST) и обрабатывает данные в зависимости от метода, переданного в параметре method GET-запроса.
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $method = $_GET['method'];
     switch ($method) {
+// Обработка метода login: Проверяет, заполнены ли все необходимые поля в запросе, затем производит аутентификацию пользователя и отправляет токен пользователя в ответ.
         case 'login':
             try {
                 $data = json_decode(file_get_contents('php://input'));
@@ -48,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 sendJson(500, 'Internal Server Error');
             }
             break;
+// Обработка метода register: Проверяет, заполнены ли все необходимые поля в запросе, затем регистрирует нового пользователя и отправляет токен пользователя в ответ.
         case 'register':
             try {
                 $data = json_decode(file_get_contents('php://input'));
@@ -81,6 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 sendJson(500, 'Internal Server Error');
             }
             break;
+// Обработка метода update: Проверяет, заполнены ли все необходимые поля в запросе, затем обновляет данные пользователя и адреса.
         case 'update':
             try {
                 $data = json_decode(file_get_contents('php://input'));
@@ -126,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 sendJson(500, 'Internal Server Error');
             }
             break;
-
+// Обработка метода getbyid: Проверяет, заполнены ли все необходимые поля в запросе, затем получает данные пользователя по его идентификатору и отправляет их в ответ.
         case 'getbyid':
             try {
                 $data = json_decode(file_get_contents('php://input'));
@@ -178,6 +185,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 sendJson(500, 'Internal Server Error');
             }
             break;
+// Обработка метода sendcode: Проверяет, заполнены ли все необходимые поля в запросе, затем отправляет код восстановления пароля пользователю по его имени пользователя.
         case 'sendcode':
             try {
                 $data = json_decode(file_get_contents('php://input'));
@@ -212,7 +220,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 sendJson(500, 'Internal Server Error');
             }
             break;
-
+// Обработка метода changepwd: Проверяет, заполнены ли все необходимые поля в запросе, затем проверяет код восстановления пароля и, если он верен, изменяет пароль пользователя.    
         case 'changepwd':
             try {
                 $data = json_decode(file_get_contents('php://input'));
@@ -258,7 +266,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 sendJson(500, 'Internal Server Error');
             }
             break;
-
+// Отправка ответов в формате JSON: Формирует ответы в формате JSON с соответствующими HTTP-статусами и сообщениями в случае успеха или ошибки.
         default:
             sendJson(405, 'Invalid Request Method. HTTP method should be POST');
             break;
