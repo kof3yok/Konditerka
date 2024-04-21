@@ -24,8 +24,8 @@ import com.google.android.material.navigation.NavigationView.OnNavigationItemSel
 import com.google.gson.Gson
 import org.json.JSONException
 import org.json.JSONObject
-
-
+// Навигация и управление фрагментами: Класс MainActivity является главной активностью приложения. 
+//В методе onCreate() настраивается интерфейс активности, устанавливаются слушатели для элементов навигации (bottomNavigationView и nvMenu) и фрагменты, связанные с каждым пунктом нижней навигационной панели, открываются при соответствующих действиях пользователя.
 class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
 
     private lateinit var fragmentManager: FragmentManager
@@ -37,7 +37,6 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //binding.bottomNavigationView.setNavigationItemSelectedListener(this)
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.Profile -> openFragment(LoginActivity(this, fragmentManager))
@@ -74,7 +73,9 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
         openFragment(ItemFragment(this, fragmentManager))
         binding.bottomNavigationView.selectedItemId = R.id.Home
     }
-
+/*Получение каталога товаров: Метод getCatalog() отправляет запрос на сервер для получения списка товаров. Если устройство подключено к Интернету, используется библиотека Volley для выполнения запроса. 
+Полученные данные обрабатываются и используются для динамического создания пунктов меню (nvMenu). 
+Если соединение с Интернетом отсутствует, выводится сообщение об ошибке и предлагается открыть настройки сети.*/
     fun getCatalog() {
         val catalogList = arrayListOf<Catalog>()
         if (ConnectionManager().checkConnectivity(this)) {
@@ -136,7 +137,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
             }
 
             alterDialog.setNegativeButton("Exit") { text, listener ->
-                ActivityCompat.finishAffinity(this)//closes all the instances of the app and the app closes completely
+                ActivityCompat.finishAffinity(this)
             }
             alterDialog.setCancelable(false)
 
@@ -145,7 +146,8 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
 
         }
     }
-
+/*Обработка нажатия кнопки "назад": Метод onBackPressed() перехватывает событие нажатия кнопки "назад" на устройстве. 
+Если боковое меню (dl) открыто, оно закрывается. В противном случае выполняется обычное поведение кнопки "назад".*/
     override fun onBackPressed() {
         if (binding.dl.isDrawerOpen(GravityCompat.START)) {
             binding.dl.closeDrawer(GravityCompat.START)
@@ -159,7 +161,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
 
         fragmentManager.beginTransaction().replace(R.id.flFragment, fragment).commit()
     }
-
+// Открытие фрагмента при навигации по боковому меню: Метод onNavigationItemSelected() отвечает за открытие соответствующего фрагмента при выборе пункта из бокового меню.
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         openFragment(fragment_catalog(this, item.tooltipText.toString(), fragmentManager))
         binding.dl.closeDrawer(GravityCompat.START)
