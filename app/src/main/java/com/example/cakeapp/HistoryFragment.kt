@@ -53,7 +53,7 @@ class HistoryFragment(
 
         activity_history_Progressdialog = view.findViewById(R.id.activity_history_Progressdialog)
 
-        layoutManager = LinearLayoutManager(contextParam)//set the layout manager
+        layoutManager = LinearLayoutManager(contextParam)
 
         recyclerView = view.findViewById(R.id.historyRecyclerViewCart)
         return view
@@ -111,27 +111,27 @@ class HistoryFragment(
                                 /* Обработка ответа от сервера: Обработчик ответа JSON от сервера проверяет статус ответа и, в случае успеха, обновляет список заказов на основе полученных данных. 
                                  Затем этот список связывается с адаптером HistoryAdapter для отображения в RecyclerView.*/
                                         menuAdapter = HistoryAdapter(
-                                            contextParam,//pass the relativelayout which has the button to enable it later
+                                            contextParam,
                                             orderList,
                                             fm
                                         )
             
                                         recyclerView.adapter =
-                                            menuAdapter//bind the  recyclerView to the adapter
+                                            menuAdapter
 
                                         recyclerView.layoutManager =
-                                            layoutManager //bind the  recyclerView to the layoutManager
+                                            layoutManager 
 
                                     } else {
 
                                         menuAdapter = HistoryAdapter(
-                                            contextParam,//pass the relativelayout which has the button to enable it later
+                                            contextParam,
                                             orderList,
                                             fm
                                         )
 
                                         recyclerView.adapter =
-                                            menuAdapter//bind the  recyclerView to the adapter
+                                            menuAdapter
 
                                         recyclerView.layoutManager =
                                             layoutManager
@@ -184,13 +184,13 @@ class HistoryFragment(
                 alterDialog.setTitle("No Internet")
                 alterDialog.setMessage("Internet Connection can't be establish!")
                 alterDialog.setPositiveButton("Open Settings") { text, listener ->
-                    val settingsIntent = Intent(Settings.ACTION_SETTINGS)//open wifi settings
+                    val settingsIntent = Intent(Settings.ACTION_SETTINGS)
                     startActivity(settingsIntent)
 
                 }
 
                 alterDialog.setNegativeButton("Exit") { text, listener ->
-                    ActivityCompat.finishAffinity(activity as Activity)//closes all the instances of the app and the app closes completely
+                    ActivityCompat.finishAffinity(activity as Activity)
                 }
                 alterDialog.create()
                 alterDialog.show()
@@ -209,12 +209,12 @@ class HistoryFragment(
             alterDialog.setTitle("No Internet")
             alterDialog.setMessage("Internet Connection can't be establish!")
             alterDialog.setPositiveButton("Open Settings") { text, listener ->
-                val settingsIntent = Intent(Settings.ACTION_SETTINGS)//open wifi settings
+                val settingsIntent = Intent(Settings.ACTION_SETTINGS)
                 startActivity(settingsIntent)
             }
 
             alterDialog.setNegativeButton("Exit") { text, listener ->
-                ActivityCompat.finishAffinity(activity as Activity)//closes all the instances of the app and the app closes completely
+                ActivityCompat.finishAffinity(activity as Activity)
             }
             alterDialog.setCancelable(false)
 
