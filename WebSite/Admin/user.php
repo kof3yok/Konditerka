@@ -173,7 +173,7 @@ if ($adminloggedin) {
                                                                             echo '<td colspan="5">No User</td>';
                                                                             echo '</tr>';
                                                                         }
-                                                                        // }
+
                                                                         ?>
                                                                     </tbody>
                                                                 </table>
