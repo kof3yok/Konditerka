@@ -51,7 +51,7 @@ class CartActivity(val contextParam: Context,val fm:FragmentManager) : Fragment(
     var totalAmount = 0.0
 
     var cartListItems = arrayListOf<CartModel>()
-
+// Инициализация переменных и компонентов интерфейса: Здесь объявляются переменные для элементов пользовательского интерфейса, таких как кнопки, текстовые поля, адаптеры и т. д. Эти элементы затем настраиваются в методе onCreateView().
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -83,7 +83,7 @@ class CartActivity(val contextParam: Context,val fm:FragmentManager) : Fragment(
         recyclerView = view.findViewById(R.id.recyclerViewCart)
         return view
     }
-
+// Update: Обновляет данные в пользовательском интерфейсе фрагмента, основываясь на текущем состоянии корзины покупок. Этот метод вызывается для обновления общей суммы заказа при изменении содержимого корзины.
     override fun Update() {
         totalAmount = 0.0
         for (cm in cartListItems) {
@@ -91,7 +91,7 @@ class CartActivity(val contextParam: Context,val fm:FragmentManager) : Fragment(
         }
         buttonPlaceOrder.text = "Заказать (" + totalAmount + " ₽.)"
     }
-
+// sendCart2Order: Отправляет содержимое корзины покупок на сервер для создания нового заказа. Перед отправкой данных выполняется проверка наличия подключения к интернету и проверка аутентификации пользователя.
     fun sendCart2Order() {
         val sp = contextParam.getSharedPreferences(
             R.string.shared_preferences.toString(),
@@ -201,7 +201,7 @@ class CartActivity(val contextParam: Context,val fm:FragmentManager) : Fragment(
             }
         }
     }
-
+// sendCart2OrderDetail: Отправляет детали заказа (товары в корзине) на сервер для создания записей о заказанных товарах. Также выполняется проверка подключения к интернету и аутентификации пользователя.    
     private fun sendCart2OrderDetail(OrderID: String) {
         if (ConnectionManager().checkConnectivity(activity as Context)) {
             if (true) {
@@ -312,22 +312,15 @@ class CartActivity(val contextParam: Context,val fm:FragmentManager) : Fragment(
 
         }
     }
-
+// openMenuFragment: Метод для открытия фрагмента меню
     fun openMenuFragment() {
         val transaction = fragmentManager?.beginTransaction()
-
-//        transaction?.replace(
-//            R.id.flFragment,
-//            ItemFragment(contextParam)
-//        )//replace the old layout with the new frag  layout
-//
-//        transaction?.commit()//apply changes
 
         transaction?.detach(this)
         transaction?.attach(this)
         transaction?.commit()
     }
-
+// fetchData: Получает данные о корзине покупок с сервера и обновляет пользовательский интерфейс соответствующим образом. Перед запросом проверяется наличие интернет-соединения и аутентификация пользователя.
     fun fetchData() {
 
         val sp = contextParam.getSharedPreferences(
@@ -346,11 +339,6 @@ class CartActivity(val contextParam: Context,val fm:FragmentManager) : Fragment(
                     try {
                         val registerUser = JSONObject()
                         registerUser.put("token", id)
-//                    registerUser.put("username", etxtUsername.text)
-//                    registerUser.put("phone", etxtMobileNumber.text)
-//                    registerUser.put("password", etxtPassword.text)
-//                    registerUser.put("address", etxtDeliveryAddress.text)
-//                    registerUser.put("email", etxtEmail.text)
 
                         val queue = Volley.newRequestQueue(activity as Context)
                         val url = ("${resources.getString(R.string.url)}cart.php?method=getall")
@@ -472,7 +460,7 @@ class CartActivity(val contextParam: Context,val fm:FragmentManager) : Fragment(
             }
         }
     }
-
+// onResume: Метод жизненного цикла фрагмента, вызываемый при восстановлении фрагмента после приостановки. Здесь выполняется проверка наличия интернет-соединения и обновление данных корзины, если соединение доступно.
     override fun onResume() {
 
         if (!ConnectionManager().checkConnectivity(activity as Context)) {
