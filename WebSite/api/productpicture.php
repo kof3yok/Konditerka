@@ -1,17 +1,23 @@
+// API для взаимодействия с изображением товаров между приложением и БД
 <?php
+// Установка заголовков CORS: Устанавливает заголовки Access-Control-Allow-Origin, Content-Type, Access-Control-Allow-Methods, Access-Control-Max-Age и Access-Control-Allow-Headers 
+// для обеспечения корректной работы запросов между разными источниками (Cross-Origin Resource Sharing, CORS).
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: OPTIONS,GET,POST,PUT,DELETE");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-
+// Подключение необходимых файлов и классов: 
+// Включает файлы DatabaseConnector.php, productpicture.php и sendJson.php, которые содержат классы и функции для работы с базой данных, изображениями продуктов и отправки JSON-ответов соответственно.
 include_once '../src/System/DatabaseConnector.php';
 include_once '../Service/productpicture.php';
 include_once '../Service/sendJson.php';
-
+// Обработка запроса методом POST: Проверяет метод запроса. Если это POST-запрос, то код обрабатывает различные действия в зависимости от переданного параметра method.
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $method = $_GET['method'];
     switch ($method) {
+// Создание новой записи: Если метод POST и method равен 'create', то код создает новую запись из полученных данных, проверяя их наличие и корректность, а затем вызывает метод Create() для создания записи в базе данных. 
+// В случае успеха возвращает ID созданной записи.
         case 'create':
             try {
                 $data = json_decode(file_get_contents('php://input'));
@@ -53,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 sendJson(500, 'Internal Server Error');
             }
             break;
+// Удаление записи: Если метод POST и method равен 'delete', то код удаляет запись из базы данных с помощью метода Delete(). Возвращает сообщение об успешном удалении или ошибке.
         case 'delete':
             try {
                 $data = json_decode(file_get_contents('php://input'));
@@ -81,6 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 sendJson(500, 'Internal Server Error');
             }
             break;
+// Обновление данных записи: Если метод POST и method равен 'update', то код обновляет данные записи, проверяя их наличие и корректность, а затем вызывает метод UpdateFirst(). Возвращает сообщение об успешном обновлении или ошибке.
         case 'update':
             try {
                 $data = json_decode(file_get_contents('php://input'));
@@ -109,6 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 sendJson(500, 'Internal Server Error');
             }
             break;
+// Активация записи: Если метод POST и method равен 'active', то код активирует запись вызовом метода Active(). Возвращает сообщение об успешной активации или ошибке.
         case 'active':
             try {
                 $data = json_decode(file_get_contents('php://input'));
@@ -134,6 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 sendJson(500, 'Internal Server Error');
             }
             break;
+// Деактивация записи: Если метод POST и method равен 'passive', то код деактивирует запись вызовом метода Passive(). Возвращает сообщение об успешной деактивации или ошибке.
         case 'passive':
             try {
                 $data = json_decode(file_get_contents('php://input'));
@@ -159,6 +169,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 sendJson(500, 'Internal Server Error');
             }
             break;
+// Получение всех записей по ID продукта: Если метод POST и method равен 'getallbyproductid', то код получает все записи из базы данных, относящиеся к определенному продукту, с помощью метода GetAllForProduct(). 
+// Возвращает массив записей в формате JSON.
         case 'getallbyproductid':
             try {
                 $data = json_decode(file_get_contents('php://input'));
@@ -175,12 +187,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $pp->ProductID = trim($data->ProductID);
                     $result = $pp->GetAllForProduct();
                     $num = $result->rowCount();
-
+// Отправка JSON-ответов: Функция sendJson() используется для отправки ответов в формате JSON с соответствующими HTTP-статусами. 
+// Если происходит ошибка, возвращается код состояния 500 ("Внутренняя ошибка сервера"), в противном случае возвращается код состояния 200 ("Успех").
                 if ($num > 0) {
                     $pp_arr = array();
                     $pp_arr["records"] = array();
                     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                        // extract($row);
                         $pp_item = array(
                             "ID" =>   $row['ID'],
                             "ProductID" => $row['ProductID'],
