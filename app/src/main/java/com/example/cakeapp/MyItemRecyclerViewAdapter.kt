@@ -34,17 +34,13 @@ import com.google.gson.Gson
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.HashMap
-
-/**
- * [RecyclerView.Adapter] that can display a [PlaceholderItem].
- * TODO: Replace the implementation with code for your data type.
- */
+// MyItemRecyclerViewAdapter: Этот класс является адаптером для RecyclerView. Он отвечает за создание представлений элементов списка и их привязку к данным.
 class MyItemRecyclerViewAdapter(
     val context: Context,
     private val values: List<Product>,
     val fm: FragmentManager
 ) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
-
+// onCreateViewHolder: Метод создает новый экземпляр ViewHolder при необходимости. Он вызывается RecyclerView для отображения новых элементов списка.
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(
@@ -56,7 +52,7 @@ class MyItemRecyclerViewAdapter(
         )
 
     }
-
+// onBindViewHolder: Этот метод связывает данные с представлениями элементов списка. Он вызывается RecyclerView для отображения данных в элементах списка.
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
         holder.image.setOnClickListener {
@@ -150,11 +146,10 @@ class MyItemRecyclerViewAdapter(
         if (item.Image != null && item.Image.length > 0) {
             val imageBytes = Base64.decode(item.Image, Base64.DEFAULT)
             val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-            //Picasso.get().load(item.Image).into(holder.image)
             holder.image.setImageBitmap(decodedImage)
         }
     }
-
+// addBasket: Этот метод отвечает за добавление товара в корзину. Он выполняет отправку запроса на сервер для добавления товара в корзину пользователя.
     fun addBasket(btn: MaterialButton) {
         val sp = context.getSharedPreferences(
             R.string.shared_preferences.toString(),
@@ -168,7 +163,6 @@ class MyItemRecyclerViewAdapter(
                 Toast.LENGTH_SHORT
             ).show()
         } else {
-
 
             val bd = btn.getTag() as ArrayList<String>
             if (ConnectionManager().checkConnectivity(context as Context)) {
@@ -225,7 +219,6 @@ class MyItemRecyclerViewAdapter(
                 alterDialog.setMessage("Internet Connection can't be establish!")
                 alterDialog.setPositiveButton("Open Settings") { text, listener ->
                     val settingsIntent = Intent(Settings.ACTION_SETTINGS)//open wifi settings
-                    //startActivity(settingsIntent)
                 }
 
                 alterDialog.setNegativeButton("Exit") { text, listener ->
@@ -239,9 +232,9 @@ class MyItemRecyclerViewAdapter(
             }
         }
     }
-
+// getItemCount: Этот метод возвращает общее количество элементов в списке.
     override fun getItemCount(): Int = values.size
-
+// ViewHolder: Внутренний класс, представляющий элемент списка. Он содержит ссылки на представления элемента списка (например, текстовые поля, изображения) и используется для управления ими в методе onBindViewHolder.
     inner class ViewHolder(binding: FragmentItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val description: TextView = binding.txtDescription
         val price: TextView = binding.txtPrice
@@ -253,5 +246,4 @@ class MyItemRecyclerViewAdapter(
             return super.toString() + " '" + description.text + "'₽"
         }
     }
-
 }
