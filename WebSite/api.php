@@ -14,20 +14,10 @@ if (!empty($_GET['name'])) {
 	$login = new Login($db);
 	$result = $login->Login("", "");
 	$count = $result->fetchAll();
-	// $statement = $dbConnection->prepare("SELECT * FROM User");
-	// $statement->execute();
-	// $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
-	//$result=mysqli_query($con,"SELECT * FROM User");
+
 
 	response(200, "Product Found", $count);
-	// if(mysqli_num_rows($result)<1)
-	// {
-	// 	response(200,"Product Not Found",NULL);
-	// }
-	// else
-	// {
-	// 	response(200,"Product Found",$result);
-	// }
+
 } else {
 	response(400, "Invalid Request", NULL);
 }
